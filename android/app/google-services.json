@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "597983428967",
+    "project_id": "tvapp-87586",
+    "storage_bucket": "tvapp-87586.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597983428967:android:634664056435788dfeafc2",
+        "android_client_info": {
+          "package_name": "com.example.miss_minutes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-5b0EZYMEeCfct6-HLefE1GNoMo2cR-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
