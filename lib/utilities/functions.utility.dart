@@ -5,12 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.state.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
+import 'package:miss_minutes/utilities/extensions.utility.dart';
 import 'package:miss_minutes/utilities/xcl.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.event.dart';
 
 openSheet({ required BuildContext context, required ShiftBloc bloc}){
   ShiftsState state = bloc.state;
-  List<String> months = state is ShiftLoaded ? getUniqueMonthYearListFromShifts(state.shifts) : [];
+  List<DateTime> months = state is ShiftLoaded ? getUniqueMonthYearListFromShifts(state.shifts) : [];
+  final formKey = GlobalKey<FormBuilderState>();
+  final DateFormat formatter = DateFormat('MMMM yyyy', 'it_IT');
 
   showModalBottomSheet(
     context: context,
@@ -23,6 +26,7 @@ openSheet({ required BuildContext context, required ShiftBloc bloc}){
     showDragHandle: true,
     builder: (context) {
       return FormBuilder(
+        key: formKey,
         child: ListView(
           padding: EdgeInsets.only(
             left: 16,
@@ -60,7 +64,9 @@ openSheet({ required BuildContext context, required ShiftBloc bloc}){
                       (month) => DropdownMenuItem(
                         value: month,
                         alignment: Alignment.center,
-                        child: Text(month),
+                        child: Text(
+                          formatter.format(month).toSentenceCase()
+                        ),
                       )
                     ).toList()
                   )
@@ -106,14 +112,15 @@ openSheet({ required BuildContext context, required ShiftBloc bloc}){
                 ),
                 label: Text("Genera"),
                 onPressed: () {
-                  populateAndSaveReport(
-                    context: context,
-                    assetPath: "assets/template.xlsx",
-                    user: User(nome: "Dennis", cognome: "Eccher", iban: "IABN"),
-                    allShifts: (state is ShiftLoaded) ? state.shifts : [],
-                    targetMonth: 4,
-                    targetYear: 2025
-                  );
+                  if(formKey.currentState?.saveAndValidate() ?? false){
+                    populateAndSaveReport(
+                      context: context,
+                      user: User(nome: "Dennis", cognome: "Eccher", iban: "IABN"),
+                      allShifts: (state is ShiftLoaded) ? state.shifts : [],
+                      targetMonth: (formKey.currentState?.value['month'] as DateTime).month,
+                      targetYear: (formKey.currentState?.value['month'] as DateTime).year
+                    );
+                  }
                   // writeAndRequestDownloadExcel(context: context, month: 'Marzo 2025');
                 },
               ),
@@ -125,7 +132,7 @@ openSheet({ required BuildContext context, required ShiftBloc bloc}){
   );
 }
 
-List<String> getUniqueMonthYearListFromShifts(List<Shift> shifts) {
+List<DateTime> getUniqueMonthYearListFromShifts(List<Shift> shifts) {
   if (shifts.isEmpty) {
     return [];
   }
@@ -147,14 +154,14 @@ List<String> getUniqueMonthYearListFromShifts(List<Shift> shifts) {
   sortedMonths.sort();
 
   // Formatta le date ordinate nella stringa "Mese Anno" in italiano
-  final DateFormat formatter = DateFormat('MMMM yyyy', 'it_IT'); // 'MMMM' per il nome completo del mese
-  final List<String> formattedMonthYearList = sortedMonths
-      .map((date) => formatter.format(date))
-      .toList();
+  // final DateFormat formatter = DateFormat('MMMM yyyy', 'it_IT'); // 'MMMM' per il nome completo del mese
+  // final List<String> formattedMonthYearList = sortedMonths
+  //   .map((date) => formatter.format(date))
+  //   .toList();
   
   // return formattedMonthYearList;
 
-  return formattedMonthYearList;
+  return sortedMonths;
 }
 
 double count(String month, List<Shift> shifts){

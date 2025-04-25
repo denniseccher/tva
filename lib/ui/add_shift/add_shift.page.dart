@@ -45,6 +45,7 @@ class AddShiftPage extends StatelessWidget{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
+            spacing: 8,
             children: [
               ListView(
                 shrinkWrap: true,

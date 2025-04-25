@@ -5,6 +5,7 @@ import 'package:miss_minutes/bloc/shifts/shifts.event.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/utilities/extensions.utility.dart';
 import 'package:miss_minutes/ui/add_shift/add_shift.page.dart';
+import 'package:miss_minutes/utilities/open_modal.utility.dart';
 
 Widget evShiftTile({ required Shift shift, required BuildContext context }){
   bool recap = true;
@@ -55,7 +56,10 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
                 value: 'edit',
                 onTap: () {
                   final ShiftBloc shiftBloc = BlocProvider.of<ShiftBloc>(context);
-                  showModalBottomSheet(context: context, builder: (context) => AddShiftPage(bloc: shiftBloc, shift: shift,),);
+                  openModal(
+                    context: context,
+                    returnWidget: AddShiftPage(bloc: shiftBloc, shift: shift,)
+                  );
                 },
                 child: ListTile(
                   shape: RoundedRectangleBorder(

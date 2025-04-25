@@ -97,40 +97,37 @@ class User {
 }
 
 
-// --- FUNZIONE populateAndSaveReport CORRETTA ---
+/// Functon to populate and save the excel file
 Future<void> populateAndSaveReport({
   required BuildContext context,
-  required String assetPath,
   required User user,
   required List<Shift> allShifts,
   required int targetMonth,
   required int targetYear,
 }) async {
   try {
-    // 1. CARICAMENTO E ACCESSO AL FOGLIO
-    if (kDebugMode) print('Caricamento template da: $assetPath');
+    // Loading and access to sheet
+    final assetPath = "assets/template.xlsx";
     final ByteData data = await rootBundle.load(assetPath);
     var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    // Usa prefisso e rinomina variabile locale
     var excelDoc = excel.Excel.decodeBytes(bytes);
 
+    // If there are no sheets in the file, exit
     if (excelDoc.tables.keys.isEmpty) {
-       if (kDebugMode) print('Errore: Nessun foglio trovato nel file template.');
-       return;
-    }
-    var sheetKey = excelDoc.tables.keys.first;
-    // Usa prefisso
-    var sheetObject = excelDoc.tables[sheetKey];
-    if (sheetObject == null) {
-      if (kDebugMode) print('Errore: Impossibile accedere al foglio "$sheetKey".');
       return;
     }
-     if (kDebugMode) print('Utilizzo foglio: "$sheetKey"');
+    // Here I'm saving the first page's key
+    var sheetKey = excelDoc.tables.keys.first;
+    var sheetObject = excelDoc.tables[sheetKey];
 
+    // If I can't access the page, return
+    if (sheetObject == null) {
+      return;
+    }
 
-    // --- 3. DEFINIZIONE DEGLI STILI (Applica prefisso a tutti i tipi excel) ---
-
-    var commonBorder = excel.Border( // Prefisso qui
+    // Styles
+    // TODO try to change here, because sometimes they don't work
+    var commonBorder = excel.Border(
       borderStyle: excel.BorderStyle.Thin,
     );
 
@@ -170,92 +167,112 @@ Future<void> populateAndSaveReport({
       bold: false
     );
 
-    // --- 4. POPOLAMENTO CELLE SPECIFICHE (Applica prefisso a tutti i tipi excel) ---
+    // Cell update
 
+    // Name cell
     sheetObject.updateCell(
       excel.CellIndex.indexByString('D3'), excel.TextCellValue(user.nome), cellStyle: headerStyle, // Prefissi qui
     );
 
+    // Surname cell
     sheetObject.updateCell(
-       excel.CellIndex.indexByString('F3'), excel.TextCellValue(user.cognome), cellStyle: headerStyle, // Prefissi qui
+      excel.CellIndex.indexByString('F3'), excel.TextCellValue(user.cognome), cellStyle: headerStyle, // Prefissi qui
     );
 
+    // Month cell
     final monthDate = DateTime(targetYear, targetMonth);
     final monthFormatter = DateFormat.MMMM('it_IT');
     final monthName = monthFormatter.format(monthDate);
     sheetObject.updateCell(
-      excel.CellIndex.indexByString('E4'), excel.TextCellValue(monthName[0].toUpperCase() + monthName.substring(1)), cellStyle: headerStyle, // Prefissi qui
+      excel.CellIndex.indexByString('E4'),
+      excel.TextCellValue("${monthName.toSentenceCase()} $targetYear"),
+      cellStyle: headerStyle, // Prefissi qui
     );
 
+    // IBAN cell
     sheetObject.updateCell(
       excel.CellIndex.indexByString('E5'), excel.TextCellValue(user.iban), cellStyle: headerStyle, // Prefissi qui
     );
 
-    // --- 5. FILTRA E POPOLA RIGHE TURNI (Applica prefisso a tutti i tipi excel) ---
-    List<Shift> filteredShifts = allShifts
-        .where((shift) => shift.dtStart.month == targetMonth && shift.dtStart.year == targetYear) // Assumo che Shift abbia dtStart
-        .toList();
-    filteredShifts.sort((a, b) => a.dtStart.compareTo(b.dtStart)); // Assumo dtStart
-
-    int startRowNumber = 8;
-
-    for (int i = 0; i < filteredShifts.length; i++) {
-      final shift = filteredShifts[i];
-      int currentRowNumber = startRowNumber + i;
-
-      sheetObject.updateCell(
-        excel.CellIndex.indexByString('A$currentRowNumber'), // Prefisso qui
-        excel.TextCellValue(shift.dtStart.toSlashDate()), // Prefisso qui, assumo dtStart
-        cellStyle: baseStyle,
-      );
-
-      sheetObject.updateCell(excel.CellIndex.indexByString('B$currentRowNumber'), excel.IntCellValue((shift.dtStart.difference(shift.dtEnd).abs().inMinutes / 45).toInt()), cellStyle: baseStyle); // Prefissi qui
-      sheetObject.updateCell(excel.CellIndex.indexByString('C$currentRowNumber'), excel.TextCellValue(shift.dtStart.difference(shift.dtEnd).abs().inMinutes.toString()), cellStyle: baseStyle); // Prefissi qui
-      sheetObject.updateCell(excel.CellIndex.indexByString('D$currentRowNumber'), excel.TextCellValue(shift.name), cellStyle: baseStyle); // Prefissi qui, assumo shift.name
-      sheetObject.updateCell(excel.CellIndex.indexByString('E$currentRowNumber'), excel.TextCellValue(shift.name == "clarina" ? "Clarina" : "M. Bianca"), cellStyle: baseStyle); // Prefissi qui
-    }
-
-    // --- 6. POPOLA FOOTER (Applica prefisso a tutti i tipi excel) ---
-
+    // Signature cell
     sheetObject.updateCell(
       excel.CellIndex.indexByString('B49'), excel.TextCellValue('${user.nome} ${user.cognome}'), cellStyle: signatureStyle, // Prefissi qui
     );
 
+    // Today cell
     sheetObject.updateCell(
       excel.CellIndex.indexByString('F49'), excel.DateCellValue.fromDateTime(DateTime.now()), cellStyle: headerStyle, // Prefisso qui
     );
 
+    // Here we populate the shifts cells
 
-    // --- 7. ENCODING E SALVATAGGIO ---
-    if (kDebugMode) print('Encoding del file Excel...');
-    // Usa la variabile rinominata excelDoc
+    // Filtering the shifts that took place in the requested month (and year)
+    List<Shift> filteredShifts = allShifts
+      .where((shift) => shift.dtStart.month == targetMonth && shift.dtStart.year == targetYear)
+      .toList();
+    // Ordered by dtStart
+    filteredShifts.sort((a, b) => a.dtStart.compareTo(b.dtStart));
+    
+    // This is where we start
+    int startRowNumber = 8;
+
+    // Cycling through all the shifts
+    for (int i = 0; i < filteredShifts.length; i++) {
+      final shift = filteredShifts[i];
+      int currentRowNumber = startRowNumber + i;
+
+      // Shift's date here
+      sheetObject.updateCell(
+        excel.CellIndex.indexByString('A$currentRowNumber'),
+        excel.TextCellValue(shift.dtStart.toSlashDate()),
+        cellStyle: baseStyle,
+      );
+      // Shift's classes here
+      sheetObject.updateCell(
+        excel.CellIndex.indexByString('B$currentRowNumber'),
+        excel.IntCellValue((shift.dtStart.difference(shift.dtEnd).abs().inMinutes / 45).toInt()),
+        cellStyle: baseStyle
+      );
+      // Shift's duration here
+      sheetObject.updateCell(
+        excel.CellIndex.indexByString('C$currentRowNumber'),
+        excel.TextCellValue(shift.dtStart.difference(shift.dtEnd).abs().inMinutes.toString()),
+        cellStyle: baseStyle
+      );
+      // Shift's name here
+      sheetObject.updateCell(
+        excel.CellIndex.indexByString('D$currentRowNumber'),
+        excel.TextCellValue(shift.name.toSentenceCase()),
+        cellStyle: baseStyle
+      );
+      // Shift's location here
+      sheetObject.updateCell(
+        excel.CellIndex.indexByString('E$currentRowNumber'),
+        excel.TextCellValue(shift.name == "clarina" ? "Clarina" : "M. Bianca"),
+        cellStyle: baseStyle
+      );
+    }
+    // CELLS POPULATION COMPLETE
+
+    // If there has been an error I return
     var fileBytes = excelDoc.encode();
-
     if (fileBytes == null) {
-      if (kDebugMode) print('Errore: Encoding del file fallito.');
       return;
     }
 
     final Uint8List bytesToSave = Uint8List.fromList(fileBytes);
-    String suggestedFileName = '${user.nome.toSentenceCase()}${user.cognome.toSentenceCase()}_${DateTime(targetYear, targetMonth).toLocaleMonthShort(context).toSentenceCase()}_$targetYear.xlsx';
-    if (kDebugMode) print('Richiesta salvataggio file: $suggestedFileName');
+    String fileName =
+      "${user.nome.toSentenceCase()}${user.cognome.toSentenceCase()}_${monthName.toSentenceCase()}_$targetYear.xlsx";
 
     await FilePicker.platform.saveFile(
-      dialogTitle: 'Salva il report mensile',
-      fileName: suggestedFileName,
+      dialogTitle: "Salva il Modulo Mensile",
+      fileName: fileName,
       type: FileType.custom,
       allowedExtensions: ['xlsx'],
       bytes: bytesToSave,
       lockParentWindow: true,
     );
-
-     if (kDebugMode) print('Operazione di salvataggio completata.');
-
-  } catch (e, stackTrace) {
-     if (kDebugMode) {
-       print('Errore durante la generazione o salvataggio del report Excel: $e');
-       print('Stack Trace: $stackTrace');
-     }
-     // Gestione errore utente
+  } catch (e) {
+    return;
   }
 }
