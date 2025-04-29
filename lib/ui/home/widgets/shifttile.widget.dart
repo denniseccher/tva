@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.event.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
-import 'package:miss_minutes/utilities/extensions.utility.dart';
 import 'package:miss_minutes/ui/add_shift/add_shift.page.dart';
 import 'package:miss_minutes/utilities/open_modal.utility.dart';
 
