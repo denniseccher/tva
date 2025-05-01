@@ -41,10 +41,7 @@ class MainApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       locale: Locale('it'),
       home: ThemedStatusBar(
-        child: BlocProvider(
-          create: (context) => ShiftBloc()..add(LoadShifts()),
-          child: RootPage(),
-        ),
+        child: RootPage(),
       ),
     );
   }

@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:miss_minutes/ui/home/home.page.dart';
 import 'package:miss_minutes/ui/login/login.dart';
+import 'package:miss_minutes/ui/shared/root.page.dart';
 import 'package:sign_button/sign_button.dart';
 
 class LoginPage extends StatelessWidget{
   LoginPage({super.key});
 
-  AuthService auth = AuthService();
+  final AuthService auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +29,14 @@ class LoginPage extends StatelessWidget{
             SignInButton(
               buttonType: ButtonType.google,
               onPressed: () async {
-                // AuthService().signOut();
-            
+          
                 UserCredential? userCredential = await auth.signInWithGoogle();
                 
-                print(
-                  "Username: ${userCredential?.user?.uid}"
-                );
+                if(userCredential != null){
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder:(context) => RootPage(),)
+                  );
+                }
               }
             ),
 

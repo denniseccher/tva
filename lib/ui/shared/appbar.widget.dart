@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
+import 'package:miss_minutes/ui/login/login.dart';
 import 'package:miss_minutes/ui/login/login.page.dart';
+import 'package:miss_minutes/ui/shared/root.page.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -31,10 +33,11 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
     ),
     actions: [
       IconButton(
-        onPressed: () {
-          // print("Username: ${FirebaseAuth.instance.currentUser?.displayName}");
-          Navigator.of(context).push(
-            MaterialPageRoute(builder:(context) => LoginPage(),)
+        onPressed: () async {
+          await FirebaseAuth.instance.signOut();
+          AuthService().signOut();
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder:(context) => RootPage(),)
           );
         },
         icon: GradientIcon(
