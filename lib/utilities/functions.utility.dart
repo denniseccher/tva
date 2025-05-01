@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.state.dart';
+import 'package:miss_minutes/classes/option.class.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/utilities/xcl.dart' as xcl;
 import 'package:miss_minutes/bloc/shifts/shifts.event.dart';
@@ -208,7 +209,7 @@ void addShift({ required Map<String, dynamic> formValues, required ShiftBloc blo
 
   Shift newShift = Shift(
     id ?? '',
-    name: formValues['name'],
+    option: formValues['option'] as Option,
     dtStart: dtStart,
     dtEnd: dtEnd,
     earning: prezzario.containsKey(
@@ -217,6 +218,10 @@ void addShift({ required Map<String, dynamic> formValues, required ShiftBloc blo
       (el) => el.key == dtStart.difference(dtEnd).abs()
     ).first.value : 0.0,
     uid: FirebaseAuth.instance.currentUser?.uid ?? ''
+  );
+
+  print(
+    "New shift: ${newShift.toJson()}"
   );
 
   bloc.add(

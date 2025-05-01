@@ -165,13 +165,13 @@ Future<void> populateAndSaveReport({
       // Shift's name here
       sheetObject.updateCell(
         excel.CellIndex.indexByString('D$currentRowNumber'),
-        excel.TextCellValue(shift.name.toSentenceCase()),
+        excel.TextCellValue(shift.option?.label?.toSentenceCase() ?? ''),
         cellStyle: baseStyle
       );
       // Shift's location here
       sheetObject.updateCell(
         excel.CellIndex.indexByString('E$currentRowNumber'),
-        excel.TextCellValue(shift.name == "clarina" ? "Clarina" : "M. Bianca"),
+        excel.TextCellValue(shift.option?.location ?? ''),
         cellStyle: baseStyle
       );
     }

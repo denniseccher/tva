@@ -25,8 +25,7 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
         leading: Text(
           shift.dtStart.toLocaleDayShort(context)
         ),
-        title: Text(shift.name.toSentenceCase()
-        ),
+        title: Text(shift.option?.label?.toSentenceCase() ?? ''),
         subtitle: Text(
           recap ? "${shift.dtStart.difference(shift.dtEnd).abs().toHHmmSS()}h • ${shift.earning}€" : "${shift.dtStart.toLocaleTime(context)} - ${shift.dtEnd.toLocaleTime(context)}"
         ), // Formatta meglio la data/ora
@@ -76,13 +75,13 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
             ];
           },
         ),
-        tileColor: switch (shift.name.toLowerCase()) {
+        tileColor: switch (shift.option?.label?.toLowerCase() ?? '') {
           'clarina' => Theme.of(context).colorScheme.tertiaryContainer,
           'perfezionamento' => Theme.of(context).colorScheme.tertiary,
       
           String() => Theme.of(context).colorScheme.surface
         },
-        textColor: switch (shift.name.toLowerCase()) {
+        textColor: switch (shift.option?.label?.toLowerCase() ?? '') {
           'clarina' => Theme.of(context).colorScheme.onTertiaryContainer,
           'perfezionamento' => Theme.of(context).colorScheme.onTertiary,
       

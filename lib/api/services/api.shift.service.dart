@@ -25,6 +25,7 @@ class ApiShiftService{
   }
 
   void addShift(Shift newShift) {
+    print("Ok qui ho: ${newShift.toJson()}");
     _apiCollectionsUtility.shiftsRef.add(newShift.toJson());
   }
 

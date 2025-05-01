@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
+import 'package:miss_minutes/classes/option.class.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/repositories/option.repository.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
@@ -30,7 +31,7 @@ class AddShiftPage extends StatelessWidget{
         // Valori iniziali, se esiste uno shift vuol dire che lo sto modificando quindi riempio con quelli
         initialValue: {
           'id' : shift?.id,
-          'name' : shift?.name,
+          'name' : shift?.option,
           'date' : shift?.dtStart ?? DateTime.now(),
           'timeStart' : shift?.dtStart,
           'timeEnd' : shift?.dtEnd
@@ -55,7 +56,7 @@ class AddShiftPage extends StatelessWidget{
                     future: _optionRepository.getOptions(),
                     builder: (context, snapshot) {
                       return FormBuilderDropdown(
-                        name: 'name',
+                        name: 'option',
                         hint: Text("--Nome del corso"),
                         // Stile
                         borderRadius: BorderRadius.circular(32),
@@ -85,8 +86,8 @@ class AddShiftPage extends StatelessWidget{
                           snapshot.data?.map(
                             (el) => DropdownMenuItem(
                               alignment: Alignment.center,
-                              value: el.value,
-                              child: Text(el.label?.toSentenceCase() ?? ''),
+                              value: el,
+                              child: Text("${el.label?.toSentenceCase()} - ${el.location?.toSentenceCase()}"),
                             )
                           ).toList() ?? []
                         : [],
@@ -235,10 +236,12 @@ class AddShiftPage extends StatelessWidget{
                           HapticFeedback.lightImpact();
                           if(_formKey.currentState!.saveAndValidate()){
                             Map<String, dynamic> formValues = _formKey.currentState?.value ?? {};
+
+                            print("Il valore del form è: ${(formValues['option'] as Option).label}");
                       
                             addShift(formValues: formValues, bloc: bloc, id: shift?.id);
                         
-                            Navigator.of(context).pop();
+                            // Navigator.of(context).pop();
                           }
                         },
                         child: Text("Salva"),

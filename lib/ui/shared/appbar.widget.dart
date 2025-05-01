@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
+import 'package:miss_minutes/ui/add_price/add_price.page.dart';
 import 'package:miss_minutes/ui/login/login.dart';
 import 'package:miss_minutes/ui/shared/root.page.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
@@ -27,6 +28,16 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
               shrinkWrap: true,
               children: [
                 ListTile(
+                  title: Text("Prezzi"),
+                  onTap: () {
+                    openModal(context: context, returnWidget: AddPricePage());
+                  },
+                  leading: Icon(
+                    Icons.euro_rounded
+                  ),
+                ),
+
+                ListTile(
                   iconColor: Colors.red,
                   textColor: Colors.red,
                   leading: Icon(Icons.logout),
@@ -40,42 +51,7 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
                   },
                 ),
 
-                ListTile(
-                  title: Text("Durata"),
-                  onTap: () {
-                    Duration current = Duration.zero;
-                    showDurationPicker(
-                      context: context,
-                      initialTime: current,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(32)
-                      )
-                    ).then(
-                      (value) => print(value)
-                    );
-                    // openModal(
-                    //   context: context,
-                    //   returnWidget: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    //     children: [
-                    //       StatefulBuilder(
-                    //         builder: (context, setModalState) {
-                    //           return DurationPicker(
-                    //             duration: current,
-                    //             onChange:(value) {
-                    //               print(current);
-                    //               setModalState((){
-                    //                 current = value;
-                    //               });
-                    //             },
-                    //           );
-                    //         }
-                    //       ),
-                    //     ],
-                    //   )
-                    // );
-                  },
-                )
+                
               ],
             )
           );

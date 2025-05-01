@@ -1,17 +1,18 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:miss_minutes/classes/option.class.dart';
 
 part 'api.shift.class.g.dart';
 
 @JsonSerializable()
 class ApiShift{
   final String id;
-  final String name;
+  final Option? option;
   final DateTime dtStart;
   final DateTime dtEnd;
   final double earning;
   final String? uid;
 
-  ApiShift(this.id, {required this.name, required this.dtStart, required this.dtEnd, required this.earning, required this.uid});
+  ApiShift(this.id, {required this.option, required this.dtStart, required this.dtEnd, required this.earning, required this.uid});
 
   factory ApiShift.fromJson(Map<String, dynamic> json) => _$ApiShiftFromJson(json);
   Map<String, dynamic> toJson() => _$ApiShiftToJson(this);

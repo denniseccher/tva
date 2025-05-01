@@ -8,7 +8,6 @@ class DurationPickerField extends FormBuilderField<Duration> {
   final InputDecoration decoration;
 
   DurationPickerField({
-    // Parametri standard di FormBuilderField passati a super
     super.key,
     required super.name,
     super.validator,
@@ -21,63 +20,68 @@ class DurationPickerField extends FormBuilderField<Duration> {
     super.onReset,
     super.focusNode,
 
-    // *** CORREZIONE 2: Inizializza il membro 'decoration' qui ***
     this.decoration = const InputDecoration(),
-
   }) : super(
-          // La chiamata a super NON include 'decoration'
-          builder: (FormFieldState<Duration?> field) {
-            // Per accedere a 'decoration', usa field.widget
-            // È utile fare un cast per chiarezza e accesso diretto
-            final widget = field.widget as DurationPickerField;
-            final bool isEnabled = widget.enabled;
+    builder: (FormFieldState<Duration?> field) {
+      final widget = field.widget as DurationPickerField;
+      final bool isEnabled = widget.enabled;
 
-            // *** CORREZIONE 3: Accedi a decoration tramite 'widget.decoration' ***
-            final InputDecoration effectiveDecoration = widget.decoration
-                .applyDefaults(Theme.of(field.context).inputDecorationTheme)
-                .copyWith(
-                  errorText: field.errorText,
-                  // Anche qui usa widget.decoration per controllare se suffixIcon è già impostato
-                  // suffixIcon: widget.decoration.suffixIcon ?? (isEnabled ? const Icon(Icons.timer_outlined, size: 18,) : null),
-                );
-
-            final String displayValue = field.value?.toHHmmSS() ?? '';
-
-            return InkWell(
-              onTap: !isEnabled
-                  ? null
-                  : () async {
-                      FocusScope.of(field.context).unfocus();
-                      try {
-                        final Duration? result = await showDurationPicker(
-                          context: field.context,
-                          initialTime: field.value ?? Duration.zero,
-                        );
-                        if (result != null) {
-                          field.didChange(result);
-                        }
-                      } catch (e) {
-                        debugPrint("Errore durante showDurationPicker: $e");
-                      }
-                    },
-              child: InputDecorator(
-                decoration: effectiveDecoration,
-                isEmpty: field.value == null && effectiveDecoration.hintText == null,
-                // isFocused: field.?.hasFocus ?? false,
-                child: Text(
-                  textAlign: TextAlign.center,
-                  displayValue.isNotEmpty
-                      ? displayValue
-                      : (effectiveDecoration.hintText ?? ''),
-                  style: field.value == null
-                      ? effectiveDecoration.hintStyle
-                      : Theme.of(field.context).textTheme.titleMedium?.copyWith(
-                          color: isEnabled ? null : Theme.of(field.context).disabledColor,
-                        ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            );
-          },
+      final InputDecoration effectiveDecoration = widget.decoration
+        .applyDefaults(Theme.of(field.context).inputDecorationTheme)
+        .copyWith(
+          errorText: field.errorText,
         );
+
+      final String displayValue = field.value?.toHHmmSS() ?? '';
+
+      return InkWell(
+        borderRadius: BorderRadius.circular(32),
+        onTap:
+          !isEnabled
+            ? null
+            : () async {
+              FocusScope.of(field.context).unfocus();
+              try {
+                final Duration? result = await showDurationPicker(
+                  context: field.context,
+                  initialTime: field.value ?? Duration.zero,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16)
+                  ),
+                  
+                );
+                if (result != null) {
+                  field.didChange(result);
+                }
+              } catch (e) {
+                debugPrint("Errore durante showDurationPicker: $e");
+              }
+            },
+        child: InputDecorator(
+          decoration: effectiveDecoration,
+          isEmpty:
+              field.value == null && effectiveDecoration.hintText == null,
+          // isFocused: field.?.hasFocus ?? false,
+          child: Text(
+            textAlign: TextAlign.center,
+            displayValue.isNotEmpty
+                ? displayValue
+                : (effectiveDecoration.hintText ?? ''),
+            style:
+              field.value == null
+                ? effectiveDecoration.hintStyle
+                : Theme.of(
+                  field.context,
+                ).textTheme.titleMedium?.copyWith(
+                  color:
+                    isEnabled
+                      ? null
+                      : Theme.of(field.context).disabledColor,
+                ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      );
+    },
+  );
 }
