@@ -9,7 +9,7 @@ import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/utilities/xcl.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.event.dart';
 
-openSheet({ required BuildContext context, required ShiftBloc bloc}){
+openSheet({ required BuildContext context, required ShiftBloc bloc, required String type}){
   ShiftsState state = bloc.state;
   List<DateTime> months = state is ShiftLoaded ? getUniqueMonthYearListFromShifts(state.shifts) : [];
   final formKey = GlobalKey<FormBuilderState>();
@@ -108,9 +108,19 @@ openSheet({ required BuildContext context, required ShiftBloc bloc}){
                   )
                 ),
                 icon: Icon(
-                  Icons.download_rounded
+                  switch(type){
+                    "email" => Icons.send_rounded,
+                    "save" => Icons.save_alt_rounded,
+                    String() => null,
+                  }
                 ),
-                label: Text("Genera"),
+                label: Text(
+                  switch(type){
+                    "email" => "Invia email",
+                    "save" => "Salva file",
+                    String() => ""
+                  }
+                ),
                 onPressed: () {
                   if(formKey.currentState?.saveAndValidate() ?? false){
                     populateAndSaveReport(
@@ -118,7 +128,8 @@ openSheet({ required BuildContext context, required ShiftBloc bloc}){
                       user: User(nome: "Dennis", cognome: "Eccher", iban: "IABN"),
                       allShifts: (state is ShiftLoaded) ? state.shifts : [],
                       targetMonth: (formKey.currentState?.value['month'] as DateTime).month,
-                      targetYear: (formKey.currentState?.value['month'] as DateTime).year
+                      targetYear: (formKey.currentState?.value['month'] as DateTime).year,
+                      type: type
                     );
                   }
                   // writeAndRequestDownloadExcel(context: context, month: 'Marzo 2025');

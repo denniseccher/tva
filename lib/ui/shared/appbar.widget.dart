@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gradient_icon/gradient_icon.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/ui/login/login.page.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
@@ -7,6 +8,7 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc shiftBloc }){
   return AppBar(
+    scrolledUnderElevation: 0,
     leading: Padding(
       padding: const EdgeInsets.only(
         left: 16,
@@ -15,17 +17,18 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
         bottom: 8
       ),
       child: CircleAvatar(
-        backgroundImage: AssetImage('assets/dennis.png'), // Immagine placeholder
+        foregroundImage: NetworkImage(
+          FirebaseAuth.instance.currentUser?.photoURL ?? ''
+        ),
+        backgroundColor: Color(0xFFFF6600),
       ),
     ),
     leadingWidth: 16 + 8 + 40,
-    actionsPadding: EdgeInsets.symmetric(
-      horizontal: 8
-    ),
-    
     centerTitle: false,
     titleSpacing: 0,
-    backgroundColor: Colors.black,
+    actionsPadding: EdgeInsets.only(
+      right: 8
+    ),
     actions: [
       IconButton(
         onPressed: () {
@@ -34,17 +37,63 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
             MaterialPageRoute(builder:(context) => LoginPage(),)
           );
         },
-        icon: Icon(
-          Icons.login
+        icon: GradientIcon(
+          size: 24,
+          offset: Offset(0, 0),
+          icon: Icons.login,
+          gradient: LinearGradient(
+            stops: [
+              0,
+              0.25
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.red,
+              Color(0xFFFF6600)
+            ],
+          )
         ),
-        color: Colors.white,
       ),
       IconButton(
-        onPressed: () => openSheet(context: context, bloc: shiftBloc),
-        icon: Icon(
-          Icons.download_rounded
+        onPressed: () => openSheet(context: context, bloc: shiftBloc, type: "email"),
+        icon: GradientIcon(
+          size: 24,
+          offset: Offset(0, 0),
+          icon: Icons.email_outlined,
+          gradient: LinearGradient(
+            stops: [
+              0,
+              0.25
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.red,
+              Color(0xFFFF6600)
+            ],
+          )
         ),
-        color: Colors.white,
+      ),
+      IconButton(
+        onPressed: () => openSheet(context: context, bloc: shiftBloc, type: "save"),
+        icon: GradientIcon(
+          size: 24,
+          offset: Offset(0, 0),
+          icon: Icons.download_rounded,
+          gradient: LinearGradient(
+            stops: [
+              0,
+              0.25
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.red,
+              Color(0xFFFF6600)
+            ],
+          )
+        ),
       )
     ],
     title: Column(
@@ -58,16 +107,16 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
             fontWeight: FontWeight.w500
           ),
           colors: [
-            Colors.purple,
-            Colors.deepOrange
+            Colors.red,
+            Color(0xFFFF6600)
           ],
         ),
         Text(
           "CSI Trento Nuoto",
           style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Colors.white
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            // color: Colors.white
           ),
         )
       ],

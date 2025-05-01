@@ -1,92 +1,15 @@
+import 'dart:io';
+
 import 'package:excel/excel.dart' as excel;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:intl/intl.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
-
-// Future<void> writeAndRequestDownloadExcel({ BuildContext? context, required String month }) async {
-//   var assetPath = "assets/template.xlsx";
-//   var suggestedFileName = "$month.xlsx";
-
-//   try {
-//     // CARICAMENTO DEL TEMPLATE
-//     final ByteData data = await rootBundle.load(assetPath);
-//     var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-//     var excel = Excel.decodeBytes(bytes);
-
-//     // ACCESSO AL FOGLIO
-//     var sheet = excel.tables[excel.tables.keys.first];
-//     if (sheet == null) {
-//       // Se il foglio non c'è, do errore ed esco
-//       return;
-//     }
-
-//     final desiredCellStyle = CellStyle(
-//       fontSize: 12,
-//       horizontalAlign: HorizontalAlign.Center,
-//       verticalAlign: VerticalAlign.Center
-//     );
-
-//     var nameCell = CellIndex.indexByString('D3');
-//     var nameCellValue = TextCellValue('Dennis Eccher');
-//     sheet.updateCell(nameCell, nameCellValue, cellStyle: desiredCellStyle.copyWith(fontSizeVal: 20));
-
-//     var monthCell = CellIndex.indexByString('E4');
-//     var monthCellValue = TextCellValue(month);
-//     sheet.updateCell(monthCell, monthCellValue, cellStyle: desiredCellStyle.copyWith(fontSizeVal: 20));
-
-
-//     var ibanCell = CellIndex.indexByString('E5');
-//     var ibanCellValue = TextCellValue('Iban qua');
-//     sheet.updateCell(ibanCell, ibanCellValue, cellStyle: desiredCellStyle.copyWith(fontSizeVal: 20));
-
-//     var dateCell = CellIndex.indexByString('F49');
-//     var dateCellValue = DateCellValue.fromDateTime(DateTime.now());
-//     sheet.updateCell(dateCell, dateCellValue, cellStyle: desiredCellStyle);
-
-//     var dt = sheet.cell(
-//       CellIndex.indexByString('A8')
-//     );
-//     dt.value = DateCellValue.fromDateTime(DateTime.now());
-    
-//     sheet.cell(
-//       CellIndex.indexByString('B8')
-//     ).value = IntCellValue(2);
-
-//     // Definisci l'indice della cella target (D3)
-//     final cellIndex = CellIndex.indexByString('C8');
-//     final cellValue = TimeCellValue.fromDuration(Duration(minutes: 45));
-
-
-//     sheet.updateCell(cellIndex, cellValue, cellStyle: desiredCellStyle);
-
-//     // RICODIFICO I BYTES IN EXCEL
-//     var fileBytes = excel.encode();
-//     if (fileBytes == null) {
-//       // Se non funziona, do errore ed esco
-//       return;
-//     }
-
-//     // file_picker richiede Uint8List, quindi convertiamo se necessario
-//     final Uint8List bytesToSave = Uint8List.fromList(fileBytes);
-
-//     // RICHIESTA DI SALVATAGGIO DEL FILE
-//     await FilePicker.platform.saveFile(
-//       dialogTitle: 'Salva il file Excel',
-//       fileName: suggestedFileName,
-//       type: FileType.custom,
-//       allowedExtensions: ['xlsx'],
-//       bytes: bytesToSave,
-//       lockParentWindow: true,
-//     );
-
-//   } catch (e) {
-//     // TODO gestione errore
-//   }
-// }
+import 'package:path_provider/path_provider.dart';
 
 class User {
   final String nome;
@@ -96,7 +19,6 @@ class User {
   User({required this.nome, required this.cognome, required this.iban});
 }
 
-
 /// Functon to populate and save the excel file
 Future<void> populateAndSaveReport({
   required BuildContext context,
@@ -104,6 +26,7 @@ Future<void> populateAndSaveReport({
   required List<Shift> allShifts,
   required int targetMonth,
   required int targetYear,
+  required String type
 }) async {
   try {
     // Loading and access to sheet
@@ -264,15 +187,55 @@ Future<void> populateAndSaveReport({
     String fileName =
       "${user.nome.toSentenceCase()}${user.cognome.toSentenceCase()}_${monthName.toSentenceCase()}_$targetYear.xlsx";
 
-    await FilePicker.platform.saveFile(
-      dialogTitle: "Salva il Modulo Mensile",
-      fileName: fileName,
-      type: FileType.custom,
-      allowedExtensions: ['xlsx'],
-      bytes: bytesToSave,
-      lockParentWindow: true,
-    );
+    switch (type) {
+      case "email":
+        _sendEmailWithAttachment(
+          bytesToSave,
+          fileName,
+          user,
+          monthName
+        );
+        break;
+      
+      case "save":
+        _saveFile(
+          bytesToSave,
+          fileName
+        );
+        break;
+      default:
+    }
+
+    
   } catch (e) {
     return;
   }
+}
+
+Future _saveFile(Uint8List bytesToSave, String fileName) async {
+  await FilePicker.platform.saveFile(
+    dialogTitle: "Salva il Modulo Mensile",
+    fileName: fileName,
+    type: FileType.custom,
+    allowedExtensions: ['xlsx'],
+    bytes: bytesToSave,
+    lockParentWindow: true,
+  );
+}
+
+Future _sendEmailWithAttachment(Uint8List bytes, String fileName, User user, String monthName) async {
+  final tempDir = await getTemporaryDirectory();
+  final filePath = '${tempDir.path}/$fileName';
+  final file = File(filePath);
+  await file.writeAsBytes(bytes);
+
+  final email = Email(
+    body: "In allegato il modulo dei turni di ${monthName.toLowerCase()}",
+    subject: "Turni $monthName, ${user.nome} ${user.cognome}",
+    recipients: [],
+    attachmentPaths: [filePath],
+    isHTML: false,
+  );
+
+  await FlutterEmailSender.send(email);
 }
