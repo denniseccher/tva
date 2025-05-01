@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:miss_minutes/api/classes/api.shift.class.dart';
 import 'package:miss_minutes/api/utilities/api.collections.utility.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
@@ -7,7 +8,7 @@ class ApiShiftService{
   final ApiCollectionsUtility _apiCollectionsUtility = ApiCollectionsUtility();
 
   Future<List<ApiShift>> getShifts() async{
-    QuerySnapshot snapshot = await _apiCollectionsUtility.shiftsRef.orderBy('dtStart').get();
+    QuerySnapshot snapshot = await _apiCollectionsUtility.shiftsRef.where("uid", isEqualTo: FirebaseAuth.instance.currentUser?.uid).orderBy('dtStart').get();
     List<QueryDocumentSnapshot<Object?>> docs = snapshot.docs;
 
     return docs.map(

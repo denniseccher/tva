@@ -10,15 +10,17 @@ class Shift{
   final DateTime dtStart;
   final DateTime dtEnd;
   final double earning;
+  final String uid;
 
-  Shift(this.id, {required this.name, required this.dtStart, required this.dtEnd, required this.earning});
+  Shift(this.id, {required this.name, required this.dtStart, required this.dtEnd, required this.earning, required this.uid});
 
   factory Shift.fromApi(ApiShift apiShift) => Shift(
     apiShift.id,
     name: apiShift.name,
     dtStart: apiShift.dtStart,
     dtEnd: apiShift.dtEnd,
-    earning: apiShift.earning
+    earning: apiShift.earning,
+    uid: apiShift.uid ?? ''
   );
   factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
   Map<String, dynamic> toJson() => _$ShiftToJson(this);

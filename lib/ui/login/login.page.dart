@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:miss_minutes/ui/home/home.page.dart';
 import 'package:miss_minutes/ui/login/login.dart';
 import 'package:miss_minutes/ui/shared/root.page.dart';
 import 'package:sign_button/sign_button.dart';

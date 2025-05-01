@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gap/gap.dart';
@@ -6,7 +7,7 @@ import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.state.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
-import 'package:miss_minutes/utilities/xcl.dart';
+import 'package:miss_minutes/utilities/xcl.dart' as xcl;
 import 'package:miss_minutes/bloc/shifts/shifts.event.dart';
 
 openSheet({ required BuildContext context, required ShiftBloc bloc, required String type}){
@@ -123,9 +124,9 @@ openSheet({ required BuildContext context, required ShiftBloc bloc, required Str
                 ),
                 onPressed: () {
                   if(formKey.currentState?.saveAndValidate() ?? false){
-                    populateAndSaveReport(
+                    xcl.populateAndSaveReport(
                       context: context,
-                      user: User(nome: "Dennis", cognome: "Eccher", iban: "IABN"),
+                      user: xcl.User(nome: "Dennis", cognome: "Eccher", iban: "IABN"),
                       allShifts: (state is ShiftLoaded) ? state.shifts : [],
                       targetMonth: (formKey.currentState?.value['month'] as DateTime).month,
                       targetYear: (formKey.currentState?.value['month'] as DateTime).year,
@@ -214,7 +215,8 @@ void addShift({ required Map<String, dynamic> formValues, required ShiftBloc blo
       dtStart.difference(dtEnd).abs()
     ) ? prezzario.entries.where(
       (el) => el.key == dtStart.difference(dtEnd).abs()
-    ).first.value : 0.0
+    ).first.value : 0.0,
+    uid: FirebaseAuth.instance.currentUser?.uid ?? ''
   );
 
   bloc.add(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:miss_minutes/api/classes/api.option.class.dart';
 import 'package:miss_minutes/api/utilities/api.collections.utility.dart';
 
@@ -7,7 +8,7 @@ class ApiOptionsService{
   ApiCollectionsUtility apiCollections = ApiCollectionsUtility();
 
   Future<List<ApiOption>> getOptions() async{
-    QuerySnapshot snapshot = await apiCollections.optionsRef.get();
+    QuerySnapshot snapshot = await apiCollections.optionsRef.where("uid", isEqualTo: FirebaseAuth.instance.currentUser?.uid).get();
     List<QueryDocumentSnapshot<Object?>> docs = snapshot.docs;
 
     return docs.map(

@@ -9,8 +9,9 @@ class ApiShift{
   final DateTime dtStart;
   final DateTime dtEnd;
   final double earning;
+  final String? uid;
 
-  ApiShift(this.id, {required this.name, required this.dtStart, required this.dtEnd, required this.earning});
+  ApiShift(this.id, {required this.name, required this.dtStart, required this.dtEnd, required this.earning, required this.uid});
 
   factory ApiShift.fromJson(Map<String, dynamic> json) => _$ApiShiftFromJson(json);
   Map<String, dynamic> toJson() => _$ApiShiftToJson(this);
