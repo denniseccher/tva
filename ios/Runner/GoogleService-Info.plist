@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>597983428967-125t1jd643k66ao9865pdnoe69h4f4oi.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.597983428967-125t1jd643k66ao9865pdnoe69h4f4oi</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC6Vc33pHSxntoaZS1fOn4NlPo0E8RtnaI</string>
 	<key>GCM_SENDER_ID</key>
@@ -9,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.missMinutes</string>
+	<string>com.dennis.tva</string>
 	<key>PROJECT_ID</key>
 	<string>tvapp-87586</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:597983428967:ios:d127c8bec15c05f1feafc2</string>
+	<string>1:597983428967:ios:88af9d3ae7580c7ffeafc2</string>
 </dict>
 </plist>

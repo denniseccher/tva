@@ -12,7 +12,12 @@
           "package_name": "com.example.miss_minutes"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "597983428967-t6ndpj83gk69e1t4rfv799qbu0qq71iq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB-5b0EZYMEeCfct6-HLefE1GNoMo2cR-g"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597983428967-t6ndpj83gk69e1t4rfv799qbu0qq71iq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "597983428967-ct4atfuttg6vd2l489pd7deu93nmt7ml.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.missMinutes"
+              }
+            }
+          ]
         }
       }
     }

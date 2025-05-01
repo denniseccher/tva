@@ -60,11 +60,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC6Vc33pHSxntoaZS1fOn4NlPo0E8RtnaI',
-    appId: '1:597983428967:ios:d127c8bec15c05f1feafc2',
+    appId: '1:597983428967:ios:88af9d3ae7580c7ffeafc2',
     messagingSenderId: '597983428967',
     projectId: 'tvapp-87586',
     storageBucket: 'tvapp-87586.firebasestorage.app',
-    iosBundleId: 'com.example.missMinutes',
+    iosClientId: '597983428967-125t1jd643k66ao9865pdnoe69h4f4oi.apps.googleusercontent.com',
+    iosBundleId: 'com.dennis.tva',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,6 +74,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '597983428967',
     projectId: 'tvapp-87586',
     storageBucket: 'tvapp-87586.firebasestorage.app',
+    iosClientId: '597983428967-ct4atfuttg6vd2l489pd7deu93nmt7ml.apps.googleusercontent.com',
     iosBundleId: 'com.example.missMinutes',
   );
 
@@ -85,4 +87,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'tvapp-87586.firebasestorage.app',
     measurementId: 'G-XVEENBL0J5',
   );
+
 }
