@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -21,6 +20,8 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
     actionsPadding: EdgeInsets.symmetric(
       horizontal: 8
     ),
+    
+    centerTitle: false,
     titleSpacing: 0,
     backgroundColor: Colors.black,
     actions: [
@@ -34,17 +35,17 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
     ],
     title: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GradientText(
-          "${DateTime.now().greeting().toSentenceCase()} Dennis",
+          "Ciao Dennis",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500
           ),
           colors: [
-            Color(0xFFFF0000),
-            Color.fromARGB(255, 251, 137, 60)
+            Colors.purple,
+            Colors.deepOrange
           ],
         ),
         Text(

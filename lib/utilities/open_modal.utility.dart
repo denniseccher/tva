@@ -9,7 +9,8 @@ openModal({ required BuildContext context, required dynamic returnWidget }){
       // curve: Curves.fastEaseInToSlowEaseOut
     ),
     constraints: BoxConstraints(
-      maxHeight: min(MediaQuery.of(context).size.height - (kToolbarHeight * 2), MediaQuery.of(context).size.height * 0.8)
+      maxHeight: min(MediaQuery.of(context).size.height - (kToolbarHeight * 2), MediaQuery.of(context).size.height * 0.8),
+      maxWidth: 512
     ),
     showDragHandle: true,
     context: context,
@@ -51,7 +52,6 @@ class ConfirmExitWrapperState extends State<ConfirmExitWrapper> {
       // Se è true, onPopInvoked viene chiamato con didPop = true DOPO che la navigazione è avvenuta
       canPop: widget.canPop, // Permette la chiusura diretta solo se non stiamo gestendo il pop
       onPopInvokedWithResult: (didPop, result) {
-        print("Cazo");
         if (didPop) {
           // Se didPop è true, il bottom sheet si è già chiuso. Non fare nulla qui.
           return;

@@ -16,7 +16,7 @@ class RootPage extends StatelessWidget{
       extendBody: true,
       appBar: evAppBar(context: context, shiftBloc: shiftBloc),
       floatingActionButton: evFab(context: context, shiftBloc: shiftBloc),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: HomePage(),
     );
   }
