@@ -20,15 +20,30 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
           });
         },
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50)
+          borderRadius: BorderRadius.circular(20)
         ),
         leading: Text(
           shift.dtStart.toLocaleDayShort(context)
         ),
-        title: Text(shift.option?.label?.toSentenceCase() ?? ''),
-        subtitle: Text(
-          recap ? "${shift.dtStart.difference(shift.dtEnd).abs().toHHmmSS()}h • ${shift.earning}€" : "${shift.dtStart.toLocaleTime(context)} - ${shift.dtEnd.toLocaleTime(context)}"
-        ), // Formatta meglio la data/ora
+        title: Text(
+          shift.option?.label?.toSentenceCase() ?? '',
+          style: TextStyle(
+            fontWeight: FontWeight.w600
+          ),
+        ),
+        subtitle: Row(
+          children: [
+            Text(
+              shift.option?.location.toString().toSentenceCase() ?? ''
+            ),
+            Text(
+              " • "
+            ),
+            Text(
+              recap ? "${shift.dtStart.difference(shift.dtEnd).abs().toHHmmSS()}h - ${shift.earning}€" : "${shift.dtStart.toLocaleTime(context)} - ${shift.dtEnd.toLocaleTime(context)}"
+            ),
+          ],
+        ),
         trailing: PopupMenuButton(
           padding: EdgeInsets.all(8),
           menuPadding: EdgeInsets.all(8),
@@ -75,13 +90,13 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
             ];
           },
         ),
-        tileColor: switch (shift.option?.label?.toLowerCase() ?? '') {
+        tileColor: switch (shift.option?.value?.toLowerCase() ?? '') {
           'clarina' => Theme.of(context).colorScheme.tertiaryContainer,
           'perfezionamento' => Theme.of(context).colorScheme.tertiary,
       
           String() => Theme.of(context).colorScheme.surface
         },
-        textColor: switch (shift.option?.label?.toLowerCase() ?? '') {
+        textColor: switch (shift.option?.value?.toLowerCase() ?? '') {
           'clarina' => Theme.of(context).colorScheme.onTertiaryContainer,
           'perfezionamento' => Theme.of(context).colorScheme.onTertiary,
       
