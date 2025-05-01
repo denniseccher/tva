@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
+import 'package:miss_minutes/ui/login/login.page.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
@@ -26,6 +28,18 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
     backgroundColor: Colors.black,
     actions: [
       IconButton(
+        onPressed: () {
+          // print("Username: ${FirebaseAuth.instance.currentUser?.displayName}");
+          Navigator.of(context).push(
+            MaterialPageRoute(builder:(context) => LoginPage(),)
+          );
+        },
+        icon: Icon(
+          Icons.login
+        ),
+        color: Colors.white,
+      ),
+      IconButton(
         onPressed: () => openSheet(context: context, bloc: shiftBloc),
         icon: Icon(
           Icons.download_rounded
@@ -38,7 +52,7 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GradientText(
-          "Ciao Dennis",
+          "Ciao ${FirebaseAuth.instance.currentUser?.displayName}",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500
