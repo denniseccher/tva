@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:miss_minutes/classes/course.class.dart';
 
 part 'api.course.class.g.dart';
 
@@ -10,6 +11,13 @@ class ApiCourse{
   final String? colorHex;
 
   ApiCourse({required this.id, required this.name, required this.location, required this.colorHex});
+
+  factory ApiCourse.fromMain(Course course) => ApiCourse(
+    id: course.id,
+    name: course.name,
+    location: course.location,
+    colorHex: course.colorHex
+  );
 
   factory ApiCourse.fromJson(Map<String, dynamic> json) => _$ApiCourseFromJson(json);
   Map<String, dynamic> toJson() => _$ApiCourseToJson(this);
