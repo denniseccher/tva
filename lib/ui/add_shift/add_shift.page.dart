@@ -268,7 +268,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                       
                             addShift(formValues: formValues, bloc: widget.bloc, id: widget.shift?.id);
                         
-                            // Navigator.of(context).pop();
+                            Navigator.of(context).pop();
                           }
                         },
                         child: Text("Salva"),

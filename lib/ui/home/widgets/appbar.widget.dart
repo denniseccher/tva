@@ -1,4 +1,3 @@
-import 'package:duration_picker/duration_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
@@ -26,6 +25,12 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
           openModal(
             context: context,
             returnWidget: ListView(
+              padding: EdgeInsets.only(
+                left: 8,
+                right: 8,
+                top: 8,
+                bottom: kBottomNavigationBarHeight / 2
+              ),
               shrinkWrap: true,
               children: [
 
@@ -61,6 +66,9 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
                       MaterialPageRoute(builder:(context) => RootPage(),)
                     );
                   },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)
+                  ),
                 ),
 
                 

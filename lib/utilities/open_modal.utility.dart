@@ -10,7 +10,9 @@ openModal({ required BuildContext context, required dynamic returnWidget }){
     ),
     constraints: BoxConstraints(
       maxHeight: min(MediaQuery.of(context).size.height - (kToolbarHeight * 2), MediaQuery.of(context).size.height * 0.8),
-      // maxWidth: 512
+      minHeight: kBottomNavigationBarHeight * 2,
+      minWidth: min(MediaQuery.of(context).size.width, 512),
+      maxWidth: 512
     ),
     showDragHandle: true,
     context: context,

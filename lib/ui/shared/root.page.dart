@@ -5,8 +5,8 @@ import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.event.dart';
 import 'package:miss_minutes/ui/home/home.page.dart';
 import 'package:miss_minutes/ui/login/login.page.dart';
-import 'package:miss_minutes/ui/shared/appbar.widget.dart';
-import 'package:miss_minutes/ui/shared/fab.widget.dart';
+import 'package:miss_minutes/ui/home/widgets/appbar.widget.dart';
+import 'package:miss_minutes/ui/home/widgets/fab.widget.dart';
 
 class RootPage extends StatelessWidget{
   const RootPage({super.key});

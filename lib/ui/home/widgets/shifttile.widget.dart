@@ -90,15 +90,15 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
             ];
           },
         ),
-        tileColor: switch (shift.option?.value?.toLowerCase() ?? '') {
-          'clarina' => Theme.of(context).colorScheme.tertiaryContainer,
-          'perfezionamento' => Theme.of(context).colorScheme.tertiary,
+        tileColor: switch (shift.option?.label?.toLowerCase() ?? '') {
+          'clarina' => Color(0xFFffb3ba),
+          'perfezionamento ragazzi' => Color(0xFFbae1ff),
       
           String() => Theme.of(context).colorScheme.surface
         },
-        textColor: switch (shift.option?.value?.toLowerCase() ?? '') {
+        textColor: switch (shift.option?.label?.toLowerCase() ?? '') {
           'clarina' => Theme.of(context).colorScheme.onTertiaryContainer,
-          'perfezionamento' => Theme.of(context).colorScheme.onTertiary,
+          'perfezionamento ragazzi' => Theme.of(context).colorScheme.onTertiary,
       
           String() => Theme.of(context).colorScheme.onSurface
         },

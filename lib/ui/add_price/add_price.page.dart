@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:miss_minutes/ui/fields/durationpicker.field.dart';
 
 class AddPricePage extends StatefulWidget{
-  AddPricePage({super.key});
+  const AddPricePage({super.key});
 
   @override
   State<AddPricePage> createState() => _AddPricePageState();
