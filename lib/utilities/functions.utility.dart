@@ -220,10 +220,6 @@ void addShift({ required Map<String, dynamic> formValues, required ShiftBloc blo
     uid: FirebaseAuth.instance.currentUser?.uid ?? ''
   );
 
-  print(
-    "New shift: ${newShift.toJson()}"
-  );
-
   bloc.add(
     newShift.id != '' ? UpdateShift(newShift: newShift) : AddShift(newShift) 
   );

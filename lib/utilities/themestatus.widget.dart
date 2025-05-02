@@ -10,8 +10,8 @@ class ThemedStatusBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion(
       value: Theme.of(context).brightness == Brightness.dark
-          ? SystemUiOverlayStyle.light
-          : SystemUiOverlayStyle.dark,
+        ? SystemUiOverlayStyle.light
+        : SystemUiOverlayStyle.dark,
       child: child,
     );
   }
