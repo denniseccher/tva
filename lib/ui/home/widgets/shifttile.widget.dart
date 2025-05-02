@@ -19,9 +19,6 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
             recap = !recap;
           });
         },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20)
-        ),
         leading: Text(
           shift.dtStart.toLocaleDayShort(context)
         ),

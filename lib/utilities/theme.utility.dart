@@ -98,6 +98,11 @@ ThemeData lightTheme = ThemeData(
   extensions: const <ThemeExtension<dynamic>>[
     CustomTheme.light,
   ],
+  listTileTheme: ListTileThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16)
+    ),
+  )
 );
 
 ThemeData darkTheme = ThemeData(
@@ -106,4 +111,9 @@ ThemeData darkTheme = ThemeData(
   extensions: const <ThemeExtension<dynamic>>[
     CustomTheme.dark,
   ],
+  listTileTheme: ListTileThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16)
+    ),
+  )
 );

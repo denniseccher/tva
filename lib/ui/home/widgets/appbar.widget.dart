@@ -28,7 +28,7 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
               padding: EdgeInsets.only(
                 left: 8,
                 right: 8,
-                top: 8,
+                top: 0,
                 bottom: kBottomNavigationBarHeight / 2
               ),
               shrinkWrap: true,
@@ -66,12 +66,7 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
                       MaterialPageRoute(builder:(context) => RootPage(),)
                     );
                   },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)
-                  ),
                 ),
-
-                
               ],
             )
           );
