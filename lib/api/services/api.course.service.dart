@@ -27,6 +27,9 @@ class ApiCourseService{
   }
 
   void addCourse(ApiCourse newCourse){
+    newCourse = newCourse.copyWith(
+      uid: user?.uid
+    );
     _apiCollectionsUtility.coursesRef.add(newCourse.toJson());
   }
 

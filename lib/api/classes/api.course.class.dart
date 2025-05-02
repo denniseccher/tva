@@ -9,16 +9,36 @@ class ApiCourse{
   final String name;
   final String location;
   final String? colorHex;
+  final String? uid;
 
-  ApiCourse({required this.id, required this.name, required this.location, required this.colorHex});
+  ApiCourse({ required this.id, required this.name, required this.location, required this.colorHex, required this.uid });
 
   factory ApiCourse.fromMain(Course course) => ApiCourse(
     id: course.id,
     name: course.name,
     location: course.location,
-    colorHex: course.colorHex
+    colorHex: course.colorHex,
+    uid: null
   );
 
   factory ApiCourse.fromJson(Map<String, dynamic> json) => _$ApiCourseFromJson(json);
   Map<String, dynamic> toJson() => _$ApiCourseToJson(this);
+
+  ApiCourse copyWith({
+    String? id,
+    String? name,
+    String? location,
+    String? colorHex,
+    String? uid,
+  }) {
+    return ApiCourse(
+      // Usa il nuovo valore se fornito (diverso da null), altrimenti usa il valore corrente (this).
+      // Questa è l'implementazione standard e più semplice.
+      id: id ?? this.id,
+      name: name ?? this.name,
+      location: location ?? this.location,
+      colorHex: colorHex ?? this.colorHex,
+      uid: uid ?? this.uid,
+    );
+  }
 }

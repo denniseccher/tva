@@ -10,7 +10,8 @@ ApiCourse _$ApiCourseFromJson(Map<String, dynamic> json) => ApiCourse(
   id: json['id'] as String?,
   name: json['name'] as String,
   location: json['location'] as String,
-  colorHex: json['colorHex'] as String,
+  colorHex: json['colorHex'] as String?,
+  uid: json['uid'] as String?,
 );
 
 Map<String, dynamic> _$ApiCourseToJson(ApiCourse instance) => <String, dynamic>{
@@ -18,4 +19,5 @@ Map<String, dynamic> _$ApiCourseToJson(ApiCourse instance) => <String, dynamic>{
   'name': instance.name,
   'location': instance.location,
   'colorHex': instance.colorHex,
+  'uid': instance.uid,
 };

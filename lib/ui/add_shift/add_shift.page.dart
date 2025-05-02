@@ -9,32 +9,59 @@ import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/classes/option.class.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
+import 'package:miss_minutes/repositories/course.repository.dart';
 import 'package:miss_minutes/repositories/option.repository.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
 
-class AddShiftPage extends StatelessWidget{
+class AddShiftPage extends StatefulWidget{
   AddShiftPage({super.key, required this.bloc, this.shift});
 
   final ShiftBloc bloc;
   final Shift? shift;
 
+  @override
+  State<AddShiftPage> createState() => _AddShiftPageState();
+}
+
+class _AddShiftPageState extends State<AddShiftPage> {
   final OptionRepository _optionRepository = OptionRepository();
+
   final _formKey = GlobalKey<FormBuilderState>();
+
+  final CourseRepository _courseRepository = CourseRepository();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    printCourses();
+  }
+
+  printCourses() async{
+    print(
+      await _courseRepository.getCourses().then(
+        (courses) => courses.map(
+          (course) => course
+        )
+      )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: bloc,
+      value: widget.bloc,
       child: FormBuilder(
         // Key del Form
         key: _formKey,
         // Valori iniziali, se esiste uno shift vuol dire che lo sto modificando quindi riempio con quelli
         initialValue: {
-          'id' : shift?.id,
-          'name' : shift?.option,
-          'date' : shift?.dtStart ?? DateTime.now(),
-          'timeStart' : shift?.dtStart,
-          'timeEnd' : shift?.dtEnd
+          'id' : widget.shift?.id,
+          'name' : widget.shift?.option,
+          'date' : widget.shift?.dtStart ?? DateTime.now(),
+          'timeStart' : widget.shift?.dtStart,
+          'timeEnd' : widget.shift?.dtEnd
         },
         child: Padding(
           padding: EdgeInsets.only(
@@ -239,7 +266,7 @@ class AddShiftPage extends StatelessWidget{
 
                             print("Il valore del form è: ${(formValues['option'] as Option).label}");
                       
-                            addShift(formValues: formValues, bloc: bloc, id: shift?.id);
+                            addShift(formValues: formValues, bloc: widget.bloc, id: widget.shift?.id);
                         
                             // Navigator.of(context).pop();
                           }
@@ -256,5 +283,4 @@ class AddShiftPage extends StatelessWidget{
       ),
     );
   }
-  
 }

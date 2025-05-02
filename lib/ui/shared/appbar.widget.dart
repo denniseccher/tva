@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
+import 'package:miss_minutes/ui/add_course/add_course.page.dart';
 import 'package:miss_minutes/ui/add_price/add_price.page.dart';
 import 'package:miss_minutes/ui/login/login.dart';
 import 'package:miss_minutes/ui/shared/root.page.dart';
@@ -27,6 +28,17 @@ PreferredSizeWidget evAppBar({ required BuildContext context, required ShiftBloc
             returnWidget: ListView(
               shrinkWrap: true,
               children: [
+
+                ListTile(
+                  title: Text("Corsi"),
+                  onTap: () {
+                    openModal(context: context, returnWidget: AddCoursePage());
+                  },
+                  leading: Icon(
+                    Icons.school_rounded
+                  ),
+                ),
+
                 ListTile(
                   title: Text("Prezzi"),
                   onTap: () {
