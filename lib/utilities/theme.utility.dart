@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:miss_minutes/utilities/extensions.dart';
 
 const Color primaryGreen = Color(0xFF397C1B);
 const Color secondaryOrange = Color(0xFFF5972D);
@@ -91,12 +92,18 @@ const darkColorScheme = ColorScheme(
   surfaceTint: accentYellow,              // Tinta superficie (colore primario del tema scuro)
 );
 
-ThemeData lightTheme = ThemeData.from(
-      colorScheme: lightColorScheme,
-      useMaterial3: true,
-    );
+ThemeData lightTheme = ThemeData(
+  colorScheme: lightColorScheme,
+  useMaterial3: true,
+  extensions: const <ThemeExtension<dynamic>>[
+    CustomTheme.light,
+  ],
+);
 
-    ThemeData darkTheme = ThemeData.from(
-      colorScheme: darkColorScheme,
-      useMaterial3: true,
-    );
+ThemeData darkTheme = ThemeData(
+  colorScheme: darkColorScheme,
+  useMaterial3: true,
+  extensions: const <ThemeExtension<dynamic>>[
+    CustomTheme.dark,
+  ],
+);
