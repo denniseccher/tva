@@ -8,10 +8,6 @@ part of 'shift.class.dart';
 
 Shift _$ShiftFromJson(Map<String, dynamic> json) => Shift(
   json['id'] as String,
-  option:
-      json['option'] == null
-          ? null
-          : Option.fromJson(json['option'] as Map<String, dynamic>),
   course:
       json['course'] == null
           ? null
@@ -24,8 +20,7 @@ Shift _$ShiftFromJson(Map<String, dynamic> json) => Shift(
 
 Map<String, dynamic> _$ShiftToJson(Shift instance) => <String, dynamic>{
   'id': instance.id,
-  'option': instance.option,
-  'course': instance.course?.toJson(),
+  'course': instance.course,
   'dtStart': instance.dtStart.toIso8601String(),
   'dtEnd': instance.dtEnd.toIso8601String(),
   'earning': instance.earning,

@@ -7,7 +7,6 @@ import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.state.dart';
 import 'package:miss_minutes/classes/course.class.dart';
-import 'package:miss_minutes/classes/option.class.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/utilities/xcl.dart' as xcl;
 import 'package:miss_minutes/bloc/shifts/shifts.event.dart';

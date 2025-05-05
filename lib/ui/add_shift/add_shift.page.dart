@@ -7,11 +7,8 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
-import 'package:miss_minutes/classes/course.class.dart';
-import 'package:miss_minutes/classes/option.class.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/repositories/course.repository.dart';
-import 'package:miss_minutes/repositories/option.repository.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
 
 class AddShiftPage extends StatefulWidget{
@@ -25,7 +22,6 @@ class AddShiftPage extends StatefulWidget{
 }
 
 class _AddShiftPageState extends State<AddShiftPage> {
-  final OptionRepository _optionRepository = OptionRepository();
 
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -59,7 +55,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
         // Valori iniziali, se esiste uno shift vuol dire che lo sto modificando quindi riempio con quelli
         initialValue: {
           'id' : widget.shift?.id,
-          'name' : widget.shift?.option,
+          'name' : widget.shift?.course,
           'date' : widget.shift?.dtStart ?? DateTime.now(),
           'timeStart' : widget.shift?.dtStart,
           'timeEnd' : widget.shift?.dtEnd
