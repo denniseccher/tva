@@ -23,7 +23,7 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
           shift.dtStart.toLocaleDayShort(context)
         ),
         title: Text(
-          shift.option?.label?.toSentenceCase() ?? '',
+          shift.course?.name.toSentenceCase() ?? '',
           style: TextStyle(
             fontWeight: FontWeight.w600
           ),
@@ -31,7 +31,7 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
         subtitle: Row(
           children: [
             Text(
-              shift.option?.location.toString().toSentenceCase() ?? ''
+              shift.course?.location.toString().toSentenceCase() ?? ''
             ),
             Text(
               " • "
@@ -87,13 +87,13 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
             ];
           },
         ),
-        tileColor: switch (shift.option?.label?.toLowerCase() ?? '') {
+        tileColor: switch (shift.course?.name.toLowerCase() ?? '') {
           'clarina' => Color(0xFFffb3ba),
           'perfezionamento ragazzi' => Color(0xFFbae1ff),
       
           String() => Theme.of(context).colorScheme.surface
         },
-        textColor: switch (shift.option?.label?.toLowerCase() ?? '') {
+        textColor: switch (shift.course?.name.toLowerCase() ?? '') {
           'clarina' => Theme.of(context).colorScheme.onTertiaryContainer,
           'perfezionamento ragazzi' => Theme.of(context).colorScheme.onTertiary,
       

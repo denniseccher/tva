@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:miss_minutes/api/classes/api.shift.class.dart';
+import 'package:miss_minutes/classes/course.class.dart';
 import 'package:miss_minutes/classes/option.class.dart';
 
 part 'shift.class.g.dart';
@@ -8,16 +9,17 @@ part 'shift.class.g.dart';
 class Shift{
   final String id;
   final Option? option;
+  final Course? course;
   final DateTime dtStart;
   final DateTime dtEnd;
   final double earning;
   final String uid;
 
-  Shift(this.id, {required this.option, required this.dtStart, required this.dtEnd, required this.earning, required this.uid});
+  Shift(this.id, {this.option, required this.course, required this.dtStart, required this.dtEnd, required this.earning, required this.uid});
 
   factory Shift.fromApi(ApiShift apiShift) => Shift(
     apiShift.id,
-    option: apiShift.option,
+    course: apiShift.course,
     dtStart: apiShift.dtStart,
     dtEnd: apiShift.dtEnd,
     earning: apiShift.earning,

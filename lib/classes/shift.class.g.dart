@@ -12,6 +12,10 @@ Shift _$ShiftFromJson(Map<String, dynamic> json) => Shift(
       json['option'] == null
           ? null
           : Option.fromJson(json['option'] as Map<String, dynamic>),
+  course:
+      json['course'] == null
+          ? null
+          : Course.fromJson(json['course'] as Map<String, dynamic>),
   dtStart: DateTime.parse(json['dtStart'] as String),
   dtEnd: DateTime.parse(json['dtEnd'] as String),
   earning: (json['earning'] as num).toDouble(),
@@ -20,7 +24,8 @@ Shift _$ShiftFromJson(Map<String, dynamic> json) => Shift(
 
 Map<String, dynamic> _$ShiftToJson(Shift instance) => <String, dynamic>{
   'id': instance.id,
-  'option': instance.option?.toJson(),
+  'option': instance.option,
+  'course': instance.course?.toJson(),
   'dtStart': instance.dtStart.toIso8601String(),
   'dtEnd': instance.dtEnd.toIso8601String(),
   'earning': instance.earning,

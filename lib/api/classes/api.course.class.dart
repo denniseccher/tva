@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:miss_minutes/classes/course.class.dart';
 
@@ -18,7 +19,7 @@ class ApiCourse{
     name: course.name,
     location: course.location,
     colorHex: course.colorHex,
-    uid: null
+    uid: FirebaseAuth.instance.currentUser?.uid
   );
 
   factory ApiCourse.fromJson(Map<String, dynamic> json) => _$ApiCourseFromJson(json);

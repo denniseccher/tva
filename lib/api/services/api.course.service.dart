@@ -38,7 +38,7 @@ class ApiCourseService{
   }
 
   void updateCourse(ApiCourse newCourse){
-    _apiCollectionsUtility.shiftsRef.doc(newCourse.id).update(
+    _apiCollectionsUtility.coursesRef.doc(newCourse.id).update(
       newCourse.toJson()
     );
   }

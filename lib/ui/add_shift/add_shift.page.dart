@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
+import 'package:miss_minutes/classes/course.class.dart';
 import 'package:miss_minutes/classes/option.class.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/repositories/course.repository.dart';
@@ -14,7 +15,7 @@ import 'package:miss_minutes/repositories/option.repository.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
 
 class AddShiftPage extends StatefulWidget{
-  AddShiftPage({super.key, required this.bloc, this.shift});
+  const AddShiftPage({super.key, required this.bloc, this.shift});
 
   final ShiftBloc bloc;
   final Shift? shift;
@@ -80,7 +81,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                 children: [
                   // Future builder per ottenere la lista di opzioni per il corso
                   FutureBuilder(
-                    future: _optionRepository.getOptions(),
+                    future: _courseRepository.getCourses(),
                     builder: (context, snapshot) {
                       return FormBuilderDropdown(
                         name: 'option',
@@ -114,7 +115,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                             (el) => DropdownMenuItem(
                               alignment: Alignment.center,
                               value: el,
-                              child: Text("${el.label?.toSentenceCase()} - ${el.location?.toSentenceCase()}"),
+                              child: Text("${el.name.toCapitalizeWord()} - ${el.location.toCapitalizeWord()}"),
                             )
                           ).toList() ?? []
                         : [],
@@ -263,8 +264,6 @@ class _AddShiftPageState extends State<AddShiftPage> {
                           HapticFeedback.lightImpact();
                           if(_formKey.currentState!.saveAndValidate()){
                             Map<String, dynamic> formValues = _formKey.currentState?.value ?? {};
-
-                            print("Il valore del form è: ${(formValues['option'] as Option).label}");
                       
                             addShift(formValues: formValues, bloc: widget.bloc, id: widget.shift?.id);
                         
