@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
+import 'package:miss_minutes/classes/course.class.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/repositories/course.repository.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
@@ -36,17 +37,20 @@ class _AddShiftPageState extends State<AddShiftPage> {
   }
 
   printCourses() async{
-    print(
-      await _courseRepository.getCourses().then(
-        (courses) => courses.map(
-          (course) => course
-        )
-      )
-    );
+    // print(
+    //   await _courseRepository.getCourses().then(
+    //     (courses) => courses.map(
+    //       (course) => course
+    //     )
+    //   )
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
+
+    print(widget.shift?.course);
+
     return BlocProvider.value(
       value: widget.bloc,
       child: FormBuilder(
@@ -55,7 +59,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
         // Valori iniziali, se esiste uno shift vuol dire che lo sto modificando quindi riempio con quelli
         initialValue: {
           'id' : widget.shift?.id,
-          'name' : widget.shift?.course,
+          // 'course' : widget.shift?.course,
           'date' : widget.shift?.dtStart ?? DateTime.now(),
           'timeStart' : widget.shift?.dtStart,
           'timeEnd' : widget.shift?.dtEnd
@@ -80,7 +84,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                     future: _courseRepository.getCourses(),
                     builder: (context, snapshot) {
                       return FormBuilderDropdown(
-                        name: 'option',
+                        name: 'course',
                         hint: Text("--Nome del corso"),
                         // Stile
                         borderRadius: BorderRadius.circular(32),
@@ -105,6 +109,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                         // È abilitato solo se i dati sono presenti, se non ci sono c'è una barra di caricamento
                         enabled: snapshot.hasData,
                         disabledHint: LinearProgressIndicator(),
+                        initialValue: (snapshot.data?.contains(widget.shift?.course) ?? false) ? widget.shift?.course : null,
                         // Le opzioni vengono dallo snapshot
                         items: snapshot.hasData ?
                           snapshot.data?.map(

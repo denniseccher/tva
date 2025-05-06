@@ -25,6 +25,18 @@ class Shift{
   );
   factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
   Map<String, dynamic> toJson() => _$ShiftToJson(this);
+
+ @override
+  String toString() {
+    return '''
+id:       $id
+course:   ${course.toString()}
+dtStart:  ${dtStart.toLocal().toIso8601String()}
+dtEnd:    ${dtEnd.toLocal().toIso8601String()}
+earning:  ${earning.toStringAsFixed(2)}
+uid:      $uid
+''';
+  }
 }
 
 Map<Duration, double> prezzario = {

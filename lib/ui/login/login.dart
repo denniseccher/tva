@@ -27,15 +27,15 @@ class AuthService {
 
       // 4. Esegui l'accesso a Firebase con la credenziale
       UserCredential userCredential = await _auth.signInWithCredential(credential);
-      print("Utente loggato con Google: ${userCredential.user?.uid}");
+      // print("Utente loggato con Google: ${userCredential.user?.uid}");
       return userCredential;
 
     } on FirebaseAuthException catch (e) {
-      print("Errore FirebaseAuth: ${e.message}");
+      // print("Errore FirebaseAuth: ${e.message}");
       // Gestisci errori specifici di Firebase Auth (es. account-exists-with-different-credential)
       return null;
     } catch (e) {
-      print("Errore generico durante il Google Sign-In: $e");
+      // print("Errore generico durante il Google Sign-In: $e");
       return null;
     }
   }
@@ -44,7 +44,7 @@ class AuthService {
   Future<void> signOut() async {
     await _googleSignIn.signOut(); // Logout da Google
     await _auth.signOut();       // Logout da Firebase
-    print("Utente disconnesso");
+    // print("Utente disconnesso");
   }
 
   // Stream per ascoltare i cambiamenti dello stato di autenticazione

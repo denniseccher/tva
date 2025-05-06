@@ -20,7 +20,7 @@ Shift _$ShiftFromJson(Map<String, dynamic> json) => Shift(
 
 Map<String, dynamic> _$ShiftToJson(Shift instance) => <String, dynamic>{
   'id': instance.id,
-  'course': instance.course,
+  'course': instance.course?.toJson(),
   'dtStart': instance.dtStart.toIso8601String(),
   'dtEnd': instance.dtEnd.toIso8601String(),
   'earning': instance.earning,

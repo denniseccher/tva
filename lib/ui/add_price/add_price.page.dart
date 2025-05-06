@@ -154,8 +154,8 @@ class _AddPricePageState extends State<AddPricePage> {
                     }
 
                     // Ora hai la lista `tariffeList` pronta per essere usata
-                    print('Dati del form validi:');
-                    print(tariffeList);
+                    // print('Dati del form validi:');
+                    // print(tariffeList);
 
                     // Mostra un feedback all'utente
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -166,7 +166,7 @@ class _AddPricePageState extends State<AddPricePage> {
                     );
                   } else {
                     // Se non valido, mostra un messaggio di errore
-                    print('Validazione fallita');
+                    // print('Validazione fallita');
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Per favore, correggi gli errori nel form.'),

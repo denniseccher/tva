@@ -9,7 +9,7 @@ import 'package:miss_minutes/utilities/open_modal.utility.dart';
 
 Widget evShiftTile({ required Shift shift, required BuildContext context }){
   bool recap = true;
-  
+
   return StatefulBuilder(
     builder: (context, setState) {
     // builder: (context, setState) {
@@ -23,7 +23,7 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
           shift.dtStart.toLocaleDayShort(context)
         ),
         title: Text(
-          shift.course?.name.toSentenceCase() ?? '',
+          shift.course?.name.toCapitalizeWord() ?? '',
           style: TextStyle(
             fontWeight: FontWeight.w600
           ),
@@ -31,7 +31,7 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
         subtitle: Row(
           children: [
             Text(
-              shift.course?.location.toString().toSentenceCase() ?? ''
+              shift.course?.location.toString().toCapitalizeWord() ?? ''
             ),
             Text(
               " • "
@@ -87,18 +87,7 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
             ];
           },
         ),
-        tileColor: switch (shift.course?.name.toLowerCase() ?? '') {
-          'clarina' => Color(0xFFffb3ba),
-          'perfezionamento ragazzi' => Color(0xFFbae1ff),
-      
-          String() => Theme.of(context).colorScheme.surface
-        },
-        textColor: switch (shift.course?.name.toLowerCase() ?? '') {
-          'clarina' => Theme.of(context).colorScheme.onTertiaryContainer,
-          'perfezionamento ragazzi' => Theme.of(context).colorScheme.onTertiary,
-      
-          String() => Theme.of(context).colorScheme.onSurface
-        },
+        tileColor: ColorExtension.fromHex(shift.course?.colorHex ?? 'ffffff'),
       );
     }
   );

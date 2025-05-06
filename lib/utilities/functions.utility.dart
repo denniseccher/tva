@@ -209,7 +209,7 @@ void addShift({ required Map<String, dynamic> formValues, required ShiftBloc blo
 
   Shift newShift = Shift(
     id ?? '',
-    course: formValues['option'] as Course,
+    course: formValues['course'] as Course,
     dtStart: dtStart,
     dtEnd: dtEnd,
     earning: prezzario.containsKey(
