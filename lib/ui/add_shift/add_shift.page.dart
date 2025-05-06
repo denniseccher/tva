@@ -7,7 +7,6 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
-import 'package:miss_minutes/classes/course.class.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/repositories/course.repository.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
@@ -195,33 +194,69 @@ class _AddShiftPageState extends State<AddShiftPage> {
               
                       Expanded(
                         // Qui viene scelta l'ora di fine
-                        child: FormBuilderDateTimePicker(
-                          name: 'timeEnd',
-                          inputType: InputType.time,
-                          initialTime: TimeOfDay(hour: 16, minute: 0),
-                          locale: Locale('it'),
-                          format: DateFormat('HH:mm', 'it'),
-                          // Stile
-                          decoration: InputDecoration(
-                            hintText: '--Fine',
-                            hintStyle: TextStyle(
-                              fontWeight: FontWeight.w500
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                "Ora di fine",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14
+                                ),
+                              ),
                             ),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(32)
+                            FormBuilderDateTimePicker(
+                              name: 'timeEnd',
+                              inputType: InputType.time,
+                              initialTime: TimeOfDay(hour: 16, minute: 0),
+                              locale: Locale('it'),
+                              format: DateFormat('HH:mm', 'it'),
+                              // Stile
+                              decoration: InputDecoration(
+                                // isCollapsed: true,
+                                isDense: true,
+                                hintText: 'ora di fine',
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16
+                                ),
+                                hintStyle: TextStyle(
+                                  fontWeight: FontWeight.w400
+                                ),
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12)
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12)
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.primary,
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12)
+                                )
+                              ),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600
+                              ),
+                              // La validazione viene fatta dopo un'intereazione dell'utente e richiede che sia presente un valore
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required()
+                              ]),
                             ),
-                          ),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600
-                          ),
-                          // La validazione viene fatta dopo un'intereazione dell'utente e richiede che sia presente un valore
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required()
-                          ]),
+                          ],
                         ),
                       ),
                     ],
