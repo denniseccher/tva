@@ -225,22 +225,37 @@ class _AddShiftPageState extends State<AddShiftPage> {
                                 hintStyle: TextStyle(
                                   fontWeight: FontWeight.w400
                                 ),
+                                fillColor: WidgetStateColor.resolveWith((Set<WidgetState> states) {
+                                  if (states.contains(WidgetState.error)) {
+                                    return Theme.of(context).colorScheme.errorContainer;
+                                  }
+                                  return Theme.of(context).colorScheme.surfaceContainerHighest;
+                                }),
                                 filled: true,
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.error.withAlpha(128),
+                                    width: 0.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12)
+                                ),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(context).colorScheme.primary.withAlpha(128),
+                                    width: 0.5,
                                   ),
                                   borderRadius: BorderRadius.circular(12)
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(context).colorScheme.primary.withAlpha(128),
+                                    width: 0.5,
                                   ),
                                   borderRadius: BorderRadius.circular(12)
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(context).colorScheme.primary.withAlpha(128),
                                     width: 0.5,
                                   ),
                                   borderRadius: BorderRadius.circular(12)
