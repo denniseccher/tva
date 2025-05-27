@@ -37,6 +37,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
           "id" : course.id,
           "name" : course.name,
           "location" : course.location,
+          "colorHex" : course.colorHex,
           "firebase" : true,
           "formKey": uuid.v4(),
         }
@@ -157,7 +158,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
                           id: item['id'],
                           name: name,
                           location: location,
-                          colorHex: null,
+                          colorHex: item['colorHex'],
                         );
                         item['firebase'] ? _courseRepository.updateCourse(courseToAdd) : _courseRepository.addCourse(courseToAdd);
                       }

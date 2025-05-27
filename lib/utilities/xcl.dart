@@ -124,7 +124,7 @@ Future<void> populateAndSaveReport({
 
     // Today cell
     sheetObject.updateCell(
-      excel.CellIndex.indexByString('F49'), excel.DateCellValue.fromDateTime(DateTime.now()), cellStyle: headerStyle, // Prefisso qui
+      excel.CellIndex.indexByString('F49'), excel.TextCellValue(DateTime.now().toSlashDate(showYear: true)), cellStyle: headerStyle, // Prefisso qui
     );
 
     // Here we populate the shifts cells

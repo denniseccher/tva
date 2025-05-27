@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -33,6 +34,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       // print("Errore FirebaseAuth: ${e.message}");
       // Gestisci errori specifici di Firebase Auth (es. account-exists-with-different-credential)
+      debugPrint(e.message);
       return null;
     } catch (e) {
       // print("Errore generico durante il Google Sign-In: $e");

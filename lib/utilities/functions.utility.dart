@@ -191,9 +191,6 @@ double count(String month, List<Shift> shifts){
 /// 
 /// It composes a new Shift object and calls the right method (update or add)
 void addShift({ required Map<String, dynamic> formValues, required ShiftBloc bloc, String? id }){
-
-  print("Course: ${formValues['course']}");
-
   DateTime dtStart = DateTime(
     (formValues['date'] as DateTime).year,
     (formValues['date'] as DateTime).month,

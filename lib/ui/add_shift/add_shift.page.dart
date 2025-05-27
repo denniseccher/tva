@@ -30,7 +30,6 @@ class _AddShiftPageState extends State<AddShiftPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     printCourses();
@@ -48,9 +47,6 @@ class _AddShiftPageState extends State<AddShiftPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    print(widget.shift?.course);
-
     return BlocProvider.value(
       value: widget.bloc,
       child: FormBuilder(
@@ -115,7 +111,9 @@ class _AddShiftPageState extends State<AddShiftPage> {
                             (el) => DropdownMenuItem(
                               alignment: Alignment.center,
                               value: el,
-                              child: Text("${el.name.toCapitalizeWord()} - ${el.location.toCapitalizeWord()}"),
+                              child: Text(
+                                "${el.name.toCapitalizeWord()} - ${el.location.toCapitalizeWord()}",
+                              ),
                             )
                           ).toList() ?? []
                         : [],

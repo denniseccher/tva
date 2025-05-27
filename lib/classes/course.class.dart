@@ -33,8 +33,5 @@ colorHex: ${colorHex ?? 'N/A'}''';
   }
   
   @override
-  // TODO: implement props
-  List<Object?> get props => [id, name, location, colorHex];
-
-  
+  List<Object?> get props => [id, name, location, colorHex];  
 }

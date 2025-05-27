@@ -15,7 +15,7 @@ class _AddPricePageState extends State<AddPricePage> {
   // Lista per tenere traccia delle chiavi univoche delle righe presenti nel form.
   // Usiamo timestamp o ID univoci per evitare problemi con gli indici quando si rimuovono elementi.
   // Inizializziamo con una riga.
-  List<int> _tariffKeys = [DateTime.now().millisecondsSinceEpoch];
+  final List<int> _tariffKeys = [DateTime.now().millisecondsSinceEpoch];
 
   // Funzione per costruire una singola riga del form
   Widget _buildTariffRow(int key, int index) {
