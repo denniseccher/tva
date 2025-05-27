@@ -174,6 +174,12 @@ Future<void> populateAndSaveReport({
         excel.TextCellValue(shift.course?.location ?? ''),
         cellStyle: baseStyle
       );
+      // Shift's description here
+      sheetObject.updateCell(
+        excel.CellIndex.indexByString('F$currentRowNumber'),
+        excel.TextCellValue(shift.description ?? ''),
+        cellStyle: baseStyle
+      );
     }
     // CELLS POPULATION COMPLETE
 
