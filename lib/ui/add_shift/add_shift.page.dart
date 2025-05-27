@@ -10,6 +10,7 @@ import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/repositories/course.repository.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
+import 'dart:math';
 
 class AddShiftPage extends StatefulWidget{
   const AddShiftPage({super.key, required this.bloc, this.shift});
@@ -61,19 +62,18 @@ class _AddShiftPageState extends State<AddShiftPage> {
           // 'course' : widget.shift?.course,
           'date' : widget.shift?.dtStart ?? DateTime.now(),
           'timeStart' : widget.shift?.dtStart,
-          'timeEnd' : widget.shift?.dtEnd
+          'timeEnd' : widget.shift?.dtEnd,
+          'description' : widget.shift?.description
         },
         child: Padding(
           padding: EdgeInsets.only(
-            bottom: kBottomNavigationBarHeight,
+            bottom: max(kBottomNavigationBarHeight, MediaQuery.of(context).viewInsets.bottom),
             left: 16,
             right: 16,
             top: 16
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            spacing: 8,
+          child: ListView(
+            shrinkWrap: true,
             children: [
               ListView(
                 shrinkWrap: true,
@@ -276,8 +276,33 @@ class _AddShiftPageState extends State<AddShiftPage> {
                       ),
                     ],
                   ),
+                  Gap(8),
+                  
+                  FormBuilderTextField(
+                    name: 'description',
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    minLines: 1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'descrizione',
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w500
+                      ),
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(32)
+                      ),
+                    ),
+                  )
                 ],
               ),
+              Gap(16),
               // Pulsante di salvataggio e annulla
               Padding(
                 padding: const EdgeInsets.symmetric(

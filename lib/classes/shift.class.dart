@@ -12,8 +12,9 @@ class Shift{
   final DateTime dtEnd;
   final double earning;
   final String uid;
+  final String? description;
 
-  Shift(this.id, { required this.course, required this.dtStart, required this.dtEnd, required this.earning, required this.uid});
+  Shift(this.id, { required this.course, required this.dtStart, required this.dtEnd, required this.earning, required this.uid, this.description });
 
   factory Shift.fromApi(ApiShift apiShift) => Shift(
     apiShift.id,
@@ -21,22 +22,12 @@ class Shift{
     dtStart: apiShift.dtStart,
     dtEnd: apiShift.dtEnd,
     earning: apiShift.earning,
-    uid: apiShift.uid ?? ''
+    uid: apiShift.uid ?? '',
+    description: apiShift.description
   );
+
   factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
   Map<String, dynamic> toJson() => _$ShiftToJson(this);
-
- @override
-  String toString() {
-    return '''
-id:       $id
-course:   ${course.toString()}
-dtStart:  ${dtStart.toLocal().toIso8601String()}
-dtEnd:    ${dtEnd.toLocal().toIso8601String()}
-earning:  ${earning.toStringAsFixed(2)}
-uid:      $uid
-''';
-  }
 }
 
 Map<Duration, double> prezzario = {

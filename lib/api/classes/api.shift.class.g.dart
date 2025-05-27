@@ -16,6 +16,7 @@ ApiShift _$ApiShiftFromJson(Map<String, dynamic> json) => ApiShift(
   dtEnd: DateTime.parse(json['dtEnd'] as String),
   earning: (json['earning'] as num).toDouble(),
   uid: json['uid'] as String?,
+  description: json['description'] as String?,
 );
 
 Map<String, dynamic> _$ApiShiftToJson(ApiShift instance) => <String, dynamic>{
@@ -25,4 +26,5 @@ Map<String, dynamic> _$ApiShiftToJson(ApiShift instance) => <String, dynamic>{
   'dtEnd': instance.dtEnd.toIso8601String(),
   'earning': instance.earning,
   'uid': instance.uid,
+  'description': instance.description,
 };

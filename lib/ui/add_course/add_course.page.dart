@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:loomeive/extensions/extensions.kingping.dart';
+import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/classes/course.class.dart';
 import 'package:miss_minutes/repositories/course.repository.dart';
 import 'package:uuid/uuid.dart';
