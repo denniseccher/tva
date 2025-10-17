@@ -858,7 +858,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "79ae125c61a73bfb273b2a2090091b08d7563dbf"
+      resolved-ref: "793464b77b3d8ead968001b4fd427cdbb6f505e7"
       url: "git@github.com:eivehub/loomeive.git"
     source: git
     version: "0.1.0"

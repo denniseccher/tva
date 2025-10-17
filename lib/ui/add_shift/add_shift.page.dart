@@ -9,7 +9,7 @@ import 'package:miss_minutes/repositories/course.repository.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
 import 'dart:math';
 
-class AddShiftPage extends StatefulWidget{
+class AddShiftPage extends StatefulWidget {
   const AddShiftPage({super.key, required this.bloc, this.shift});
 
   final ShiftBloc bloc;
@@ -20,7 +20,6 @@ class AddShiftPage extends StatefulWidget{
 }
 
 class _AddShiftPageState extends State<AddShiftPage> {
-
   final _formKey = GlobalKey<FormBuilderState>();
 
   final CourseRepository _courseRepository = CourseRepository();
@@ -32,7 +31,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
     printCourses();
   }
 
-  printCourses() async{
+  printCourses() async {
     // print(
     //   await _courseRepository.getCourses().then(
     //     (courses) => courses.map(
@@ -51,19 +50,22 @@ class _AddShiftPageState extends State<AddShiftPage> {
         key: _formKey,
         // Valori iniziali, se esiste uno shift vuol dire che lo sto modificando quindi riempio con quelli
         initialValue: {
-          'id' : widget.shift?.id,
+          'id': widget.shift?.id,
           // 'course' : widget.shift?.course,
-          'date' : widget.shift?.dtStart ?? DateTime.now(),
-          'timeStart' : widget.shift?.dtStart,
-          'timeEnd' : widget.shift?.dtEnd,
-          'description' : widget.shift?.description
+          'date': widget.shift?.dtStart ?? DateTime.now(),
+          'timeStart': widget.shift?.dtStart,
+          'timeEnd': widget.shift?.dtEnd,
+          'description': widget.shift?.description,
         },
         child: Padding(
           padding: EdgeInsets.only(
-            bottom: max(kBottomNavigationBarHeight, MediaQuery.of(context).viewInsets.bottom),
+            bottom: max(
+              kBottomNavigationBarHeight,
+              MediaQuery.of(context).viewInsets.bottom,
+            ),
             left: 16,
             right: 16,
-            top: 16
+            top: 16,
           ),
           child: ListView(
             shrinkWrap: true,
@@ -85,7 +87,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                           filled: true,
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(32)
+                            borderRadius: BorderRadius.circular(32),
                           ),
                         ),
                         style: TextStyle(
@@ -96,30 +98,38 @@ class _AddShiftPageState extends State<AddShiftPage> {
                         // La validazione viene fatta dopo un'intereazione dell'utente e richiede che sia presente un valore
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required()
+                          FormBuilderValidators.required(),
                         ]),
                         // È abilitato solo se i dati sono presenti, se non ci sono c'è una barra di caricamento
                         enabled: snapshot.hasData,
                         disabledHint: LinearProgressIndicator(),
-                        initialValue: (snapshot.data?.contains(widget.shift?.course) ?? false) ? widget.shift?.course : null,
+                        initialValue:
+                            (snapshot.data?.contains(widget.shift?.course) ??
+                                    false)
+                                ? widget.shift?.course
+                                : null,
                         // Le opzioni vengono dallo snapshot
-                        items: snapshot.hasData ?
-                          snapshot.data?.map(
-                            (el) => DropdownMenuItem(
-                              alignment: Alignment.center,
-                              value: el,
-                              child: Text(
-                                "${el.name.toCapitalizeWord()} - ${el.location.toCapitalizeWord()}",
-                              ),
-                            )
-                          ).toList() ?? []
-                        : [],
+                        items:
+                            snapshot.hasData
+                                ? snapshot.data
+                                        ?.map(
+                                          (el) => DropdownMenuItem(
+                                            alignment: Alignment.center,
+                                            value: el,
+                                            child: Text(
+                                              "${el.name.toCapitalizeWord()} - ${el.location.toCapitalizeWord()}",
+                                            ),
+                                          ),
+                                        )
+                                        .toList() ??
+                                    []
+                                : [],
                       );
-                    }
+                    },
                   ),
-              
+
                   Gap(8),
-                  
+
                   // Qui viene scelta la data, di default (se non c'è già uno shift) viene messa a oggi
                   FormBuilderDateTimePicker(
                     name: 'date',
@@ -130,28 +140,24 @@ class _AddShiftPageState extends State<AddShiftPage> {
                     // Stile
                     decoration: InputDecoration(
                       hintText: '--Inizio',
-                      hintStyle: TextStyle(
-                        fontWeight: FontWeight.w500
-                      ),
+                      hintStyle: TextStyle(fontWeight: FontWeight.w500),
                       filled: true,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(32)
+                        borderRadius: BorderRadius.circular(32),
                       ),
                     ),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w600),
                     // La validazione viene fatta dopo un'intereazione dell'utente e richiede che sia presente un valore
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required()
+                      FormBuilderValidators.required(),
                     ]),
                   ),
-              
+
                   Gap(8),
-              
+
                   Row(
                     spacing: 8,
                     children: [
@@ -166,113 +172,72 @@ class _AddShiftPageState extends State<AddShiftPage> {
                           // Stile
                           decoration: InputDecoration(
                             hintText: '--Inizio',
-                            hintStyle: TextStyle(
-                              fontWeight: FontWeight.w500
-                            ),
+                            hintStyle: TextStyle(fontWeight: FontWeight.w500),
                             filled: true,
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(32)
+                              borderRadius: BorderRadius.circular(32),
                             ),
                           ),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.w600),
                           // La validazione viene fatta dopo un'intereazione dell'utente e richiede che sia presente un valore
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required()
+                            FormBuilderValidators.required(),
                           ]),
+                          onChanged: (value) {
+                            if (value != null &&
+                                (_formKey.currentState?.instantValue['timeEnd']
+                                        as DateTime)
+                                    .isBefore(value)) {
+                              _formKey.currentState?.patchValue({
+                                "timeEnd": null,
+                              });
+                            }
+                          },
                         ),
                       ),
-              
+
                       Expanded(
                         // Qui viene scelta l'ora di fine
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                "Ora di fine",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14
-                                ),
-                              ),
+                        child: FormBuilderDateTimePicker(
+                          name: 'timeEnd',
+                          inputType: InputType.time,
+                          initialTime: TimeOfDay.fromDateTime(DateTime.now().closest(
+                            TimeStep.quarterHour,
+                            round: Round.down,
+                          )),
+                          locale: Locale('it'),
+                          format: DateFormat('HH:mm', 'it'),
+                          // Stile
+                          decoration: InputDecoration(
+                            hintText: '--Fine',
+                            hintStyle: TextStyle(fontWeight: FontWeight.w500),
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(32),
                             ),
-                            FormBuilderDateTimePicker(
-                              name: 'timeEnd',
-                              inputType: InputType.time,
-                              initialTime: TimeOfDay(hour: 16, minute: 0),
-                              locale: Locale('it'),
-                              format: DateFormat('HH:mm', 'it'),
-                              // Stile
-                              decoration: InputDecoration(
-                                // isCollapsed: true,
-                                isDense: true,
-                                hintText: 'ora di fine',
-                                contentPadding: EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 16
-                                ),
-                                hintStyle: TextStyle(
-                                  fontWeight: FontWeight.w400
-                                ),
-                                fillColor: WidgetStateColor.resolveWith((Set<WidgetState> states) {
-                                  if (states.contains(WidgetState.error)) {
-                                    return Theme.of(context).colorScheme.errorContainer;
-                                  }
-                                  return Theme.of(context).colorScheme.surfaceContainerHighest;
-                                }),
-                                filled: true,
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.error.withAlpha(128),
-                                    width: 0.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12)
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.primary.withAlpha(128),
-                                    width: 0.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12)
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.primary.withAlpha(128),
-                                    width: 0.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12)
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.primary.withAlpha(128),
-                                    width: 0.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12)
-                                )
-                              ),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600
-                              ),
-                              // La validazione viene fatta dopo un'intereazione dell'utente e richiede che sia presente un valore
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required()
-                              ]),
-                            ),
-                          ],
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                          // La validazione viene fatta dopo un'intereazione dell'utente e richiede che sia presente un valore
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(),
+                          ]),
+                          onChanged: (value) {
+                            print(
+                              "TimeStart: ${_formKey.currentState?.instantValue['timeStart']}",
+                            );
+                          },
                         ),
                       ),
                     ],
                   ),
                   Gap(8),
-                  
+
                   FormBuilderTextField(
                     name: 'description',
                     textAlign: TextAlign.center,
@@ -285,24 +250,20 @@ class _AddShiftPageState extends State<AddShiftPage> {
                     ),
                     decoration: InputDecoration(
                       hintText: 'descrizione',
-                      hintStyle: TextStyle(
-                        fontWeight: FontWeight.w500
-                      ),
+                      hintStyle: TextStyle(fontWeight: FontWeight.w500),
                       filled: true,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(32)
+                        borderRadius: BorderRadius.circular(32),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               Gap(16),
               // Pulsante di salvataggio e annulla
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32.0
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: Row(
                   spacing: 8,
                   children: [
@@ -311,7 +272,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                       child: FilledButton.tonal(
                         style: ButtonStyle(
                           fixedSize: WidgetStatePropertyAll(
-                            Size(double.infinity, 48)
+                            Size(double.infinity, 48),
                           ),
                         ),
                         // Chiude quando viene premuto, annullando le modifiche
@@ -327,17 +288,22 @@ class _AddShiftPageState extends State<AddShiftPage> {
                       child: FilledButton(
                         style: ButtonStyle(
                           fixedSize: WidgetStatePropertyAll(
-                            Size(double.infinity, 48)
-                          )
+                            Size(double.infinity, 48),
+                          ),
                         ),
                         // Quando lo premo controllo che il form sia valido e lo salvo, poi eseguo la funzione per aggiungerlo
                         onPressed: () {
                           HapticFeedback.lightImpact();
-                          if(_formKey.currentState!.saveAndValidate()){
-                            Map<String, dynamic> formValues = _formKey.currentState?.value ?? {};
-                      
-                            addShift(formValues: formValues, bloc: widget.bloc, id: widget.shift?.id);
-                        
+                          if (_formKey.currentState!.saveAndValidate()) {
+                            Map<String, dynamic> formValues =
+                                _formKey.currentState?.value ?? {};
+
+                            addShift(
+                              formValues: formValues,
+                              bloc: widget.bloc,
+                              id: widget.shift?.id,
+                            );
+
                             Navigator.of(context).pop();
                           }
                         },
@@ -346,7 +312,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
