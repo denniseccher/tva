@@ -1,7 +1,5 @@
-import 'package:duration_picker/duration_picker.dart'; // Assicura che questo import fornisca showDurationPicker
+import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart'; // Non sembra usata
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:loomeive/loomeive.dart';
 
 class DurationPickerField extends FormBuilderField<Duration> {

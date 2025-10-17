@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:intl/intl.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,7 +25,7 @@ Future<void> populateAndSaveReport({
   required List<Shift> allShifts,
   required int targetMonth,
   required int targetYear,
-  required String type
+  required String type,
 }) async {
   try {
     // Loading and access to sheet
@@ -50,20 +49,18 @@ Future<void> populateAndSaveReport({
 
     // Styles
     // TODO try to change here, because sometimes they don't work
-    var commonBorder = excel.Border(
-      borderStyle: excel.BorderStyle.Thin,
-    );
+    var commonBorder = excel.Border(borderStyle: excel.BorderStyle.Thin);
 
     var baseStyle = excel.CellStyle(
       fontFamily: 'Arial', // Font desiderato (verificare installazione!)
-      fontSize: 12,
+      fontSize: 18,
       horizontalAlign: excel.HorizontalAlign.Center,
       verticalAlign: excel.VerticalAlign.Center,
       leftBorder: commonBorder, // Usa definizione corretta
       rightBorder: commonBorder,
       topBorder: commonBorder,
       bottomBorder: commonBorder,
-      bold: false
+      bold: false,
     );
 
     var headerStyle = excel.CellStyle(
@@ -75,11 +72,12 @@ Future<void> populateAndSaveReport({
       rightBorder: commonBorder,
       topBorder: commonBorder,
       bottomBorder: commonBorder,
-      bold: false
+      bold: false,
     );
 
     var signatureStyle = excel.CellStyle(
-      fontFamily: 'Brush Script MT', // Font desiderato (verificare installazione!)
+      fontFamily:
+          'Brush Script MT', // Font desiderato (verificare installazione!)
       fontSize: 18,
       horizontalAlign: excel.HorizontalAlign.Center,
       verticalAlign: excel.VerticalAlign.Center,
@@ -87,19 +85,23 @@ Future<void> populateAndSaveReport({
       rightBorder: commonBorder,
       topBorder: commonBorder,
       bottomBorder: commonBorder,
-      bold: false
+      bold: false,
     );
 
     // Cell update
 
     // Name cell
     sheetObject.updateCell(
-      excel.CellIndex.indexByString('D3'), excel.TextCellValue(user.nome), cellStyle: headerStyle, // Prefissi qui
+      excel.CellIndex.indexByString('D3'),
+      excel.TextCellValue(user.nome),
+      cellStyle: headerStyle, // Prefissi qui
     );
 
     // Surname cell
     sheetObject.updateCell(
-      excel.CellIndex.indexByString('F3'), excel.TextCellValue(user.cognome), cellStyle: headerStyle, // Prefissi qui
+      excel.CellIndex.indexByString('F3'),
+      excel.TextCellValue(user.cognome),
+      cellStyle: headerStyle, // Prefissi qui
     );
 
     // Month cell
@@ -114,28 +116,39 @@ Future<void> populateAndSaveReport({
 
     // IBAN cell
     sheetObject.updateCell(
-      excel.CellIndex.indexByString('E5'), excel.TextCellValue(user.iban), cellStyle: headerStyle, // Prefissi qui
+      excel.CellIndex.indexByString('E5'),
+      excel.TextCellValue(user.iban),
+      cellStyle: headerStyle, // Prefissi qui
     );
 
     // Signature cell
     sheetObject.updateCell(
-      excel.CellIndex.indexByString('B49'), excel.TextCellValue('${user.nome} ${user.cognome}'), cellStyle: signatureStyle, // Prefissi qui
+      excel.CellIndex.indexByString('B49'),
+      excel.TextCellValue('${user.nome} ${user.cognome}'),
+      cellStyle: signatureStyle, // Prefissi qui
     );
 
     // Today cell
     sheetObject.updateCell(
-      excel.CellIndex.indexByString('F49'), excel.TextCellValue(DateTime.now().toSlashDate(showYear: true)), cellStyle: headerStyle, // Prefisso qui
+      excel.CellIndex.indexByString('F49'),
+      excel.TextCellValue(DateTime.now().toSlashDate(showYear: true)),
+      cellStyle: headerStyle, // Prefisso qui
     );
 
     // Here we populate the shifts cells
 
     // Filtering the shifts that took place in the requested month (and year)
-    List<Shift> filteredShifts = allShifts
-      .where((shift) => shift.dtStart.month == targetMonth && shift.dtStart.year == targetYear)
-      .toList();
+    List<Shift> filteredShifts =
+        allShifts
+            .where(
+              (shift) =>
+                  shift.dtStart.month == targetMonth &&
+                  shift.dtStart.year == targetYear,
+            )
+            .toList();
     // Ordered by dtStart
     filteredShifts.sort((a, b) => a.dtStart.compareTo(b.dtStart));
-    
+
     // This is where we start
     int startRowNumber = 8;
 
@@ -153,32 +166,36 @@ Future<void> populateAndSaveReport({
       // Shift's classes here
       sheetObject.updateCell(
         excel.CellIndex.indexByString('B$currentRowNumber'),
-        excel.IntCellValue((shift.dtStart.difference(shift.dtEnd).abs().inMinutes / 45).toInt()),
-        cellStyle: baseStyle
+        excel.IntCellValue(
+          (shift.dtStart.difference(shift.dtEnd).abs().inMinutes / 45).toInt(),
+        ),
+        cellStyle: baseStyle,
       );
       // Shift's duration here
       sheetObject.updateCell(
         excel.CellIndex.indexByString('C$currentRowNumber'),
-        excel.TextCellValue(shift.dtStart.difference(shift.dtEnd).abs().inMinutes.toString()),
-        cellStyle: baseStyle
+        excel.TextCellValue(
+          shift.dtStart.difference(shift.dtEnd).abs().inMinutes.toString(),
+        ),
+        cellStyle: baseStyle,
       );
       // Shift's name here
       sheetObject.updateCell(
         excel.CellIndex.indexByString('D$currentRowNumber'),
         excel.TextCellValue(shift.course?.name.toSentenceCase() ?? ''),
-        cellStyle: baseStyle
+        cellStyle: baseStyle,
       );
       // Shift's location here
       sheetObject.updateCell(
         excel.CellIndex.indexByString('E$currentRowNumber'),
         excel.TextCellValue(shift.course?.location ?? ''),
-        cellStyle: baseStyle
+        cellStyle: baseStyle,
       );
       // Shift's description here
       sheetObject.updateCell(
         excel.CellIndex.indexByString('F$currentRowNumber'),
         excel.TextCellValue(shift.description ?? ''),
-        cellStyle: baseStyle
+        cellStyle: baseStyle,
       );
     }
     // CELLS POPULATION COMPLETE
@@ -191,28 +208,18 @@ Future<void> populateAndSaveReport({
 
     final Uint8List bytesToSave = Uint8List.fromList(fileBytes);
     String fileName =
-      "${user.nome.toSentenceCase()}${user.cognome.toSentenceCase()}_${monthName.toSentenceCase()}_$targetYear.xlsx";
+        "${user.nome.toSentenceCase()}${user.cognome.toSentenceCase()}_${monthName.toSentenceCase()}_$targetYear.xlsx";
 
     switch (type) {
       case "email":
-        _sendEmailWithAttachment(
-          bytesToSave,
-          fileName,
-          user,
-          monthName
-        );
+        _sendEmailWithAttachment(bytesToSave, fileName, user, monthName);
         break;
-      
+
       case "save":
-        _saveFile(
-          bytesToSave,
-          fileName
-        );
+        _saveFile(bytesToSave, fileName);
         break;
       default:
     }
-
-    
   } catch (e) {
     return;
   }
@@ -229,7 +236,12 @@ Future _saveFile(Uint8List bytesToSave, String fileName) async {
   );
 }
 
-Future _sendEmailWithAttachment(Uint8List bytes, String fileName, User user, String monthName) async {
+Future _sendEmailWithAttachment(
+  Uint8List bytes,
+  String fileName,
+  User user,
+  String monthName,
+) async {
   final tempDir = await getTemporaryDirectory();
   final filePath = '${tempDir.path}/$fileName';
   final file = File(filePath);

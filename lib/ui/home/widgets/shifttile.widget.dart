@@ -7,37 +7,40 @@ import 'package:miss_minutes/classes/shift.class.dart';
 import 'package:miss_minutes/ui/add_shift/add_shift.page.dart';
 import 'package:miss_minutes/utilities/open_modal.utility.dart';
 
-Widget evShiftTile({ required Shift shift, required BuildContext context }){
+Widget evShiftTile({required Shift shift, required BuildContext context}) {
   bool recap = true;
 
   return StatefulBuilder(
     builder: (context, setState) {
-    // builder: (context, setState) {
+      // builder: (context, setState) {
       return ListTile(
+        tileColor: ColorExtension.fromHex(shift.course?.colorHex ?? 'ffffff'),
+        textColor:
+            ColorExtension.fromHex(
+              shift.course?.colorHex ?? 'ffffff',
+            ).highContrast,
+        iconColor:
+            ColorExtension.fromHex(
+              shift.course?.colorHex ?? 'ffffff',
+            ).highContrast,
         onTap: () {
-          setState((){
+          setState(() {
             recap = !recap;
           });
         },
-        leading: Text(
-          shift.dtStart.toLocaleDayShort(context)
-        ),
+        leading: Text(shift.dtStart.toLocaleDayShort(context)),
         title: Text(
           shift.course?.name.toCapitalizeWord() ?? '',
-          style: TextStyle(
-            fontWeight: FontWeight.w600
-          ),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
         subtitle: Row(
           children: [
+            Text(shift.course?.location.toString().toCapitalizeWord() ?? ''),
+            Text(" • "),
             Text(
-              shift.course?.location.toString().toCapitalizeWord() ?? ''
-            ),
-            Text(
-              " • "
-            ),
-            Text(
-              recap ? "${shift.dtStart.difference(shift.dtEnd).abs().toHHmmSS()}h - ${shift.earning}€" : "${shift.dtStart.toLocaleTime(context)} - ${shift.dtEnd.toLocaleTime(context)}"
+              recap
+                  ? "${shift.dtStart.difference(shift.dtEnd).abs().toHHmmSS()}h - ${shift.earning}€"
+                  : "${shift.dtStart.toLocaleTime(context)} - ${shift.dtEnd.toLocaleTime(context)}",
             ),
           ],
         ),
@@ -45,9 +48,9 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
           padding: EdgeInsets.all(8),
           menuPadding: EdgeInsets.all(8),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16)
+            borderRadius: BorderRadius.circular(16),
           ),
-          itemBuilder:(context) {
+          itemBuilder: (context) {
             return [
               PopupMenuItem(
                 value: 'delete',
@@ -55,40 +58,33 @@ Widget evShiftTile({ required Shift shift, required BuildContext context }){
                   context.read<ShiftBloc>().add(DeleteShift(id: shift.id));
                 },
                 child: ListTile(
-                  leading: Icon(
-                    Icons.delete
-                  ),
-                  title: Text(
-                    "Elimina"
-                  ),
-                )
+                  leading: Icon(Icons.delete),
+                  title: Text("Elimina"),
+                ),
               ),
               PopupMenuItem(
                 value: 'edit',
                 onTap: () {
-                  final ShiftBloc shiftBloc = BlocProvider.of<ShiftBloc>(context);
+                  final ShiftBloc shiftBloc = BlocProvider.of<ShiftBloc>(
+                    context,
+                  );
                   openModal(
                     context: context,
-                    returnWidget: AddShiftPage(bloc: shiftBloc, shift: shift,)
+                    returnWidget: AddShiftPage(bloc: shiftBloc, shift: shift),
                   );
                 },
                 child: ListTile(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32)
+                    borderRadius: BorderRadius.circular(32),
                   ),
-                  leading: Icon(
-                    Icons.edit
-                  ),
-                  title: Text(
-                    "Modifica"
-                  ),
-                )
+                  leading: Icon(Icons.edit),
+                  title: Text("Modifica"),
+                ),
               ),
             ];
           },
         ),
-        tileColor: ColorExtension.fromHex(shift.course?.colorHex ?? 'ffffff'),
       );
-    }
+    },
   );
 }

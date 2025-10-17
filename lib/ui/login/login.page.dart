@@ -31,7 +31,7 @@ class LoginPage extends StatelessWidget{
           
                 UserCredential? userCredential = await auth.signInWithGoogle();
                 
-                if(userCredential != null){
+                if(userCredential != null && context.mounted){
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder:(context) => RootPage(),)
                   );
