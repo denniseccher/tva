@@ -117,7 +117,7 @@ class _AddShiftPageState extends State<AddShiftPage> {
                                             alignment: Alignment.center,
                                             value: el,
                                             child: Text(
-                                              "${el.name.toCapitalizeWord()} - ${el.location.toCapitalizeWord()}",
+                                              "${el.name.toCapitalizeWord} - ${el.location.toCapitalizeWord}",
                                             ),
                                           ),
                                         )
@@ -204,10 +204,12 @@ class _AddShiftPageState extends State<AddShiftPage> {
                         child: FormBuilderDateTimePicker(
                           name: 'timeEnd',
                           inputType: InputType.time,
-                          initialTime: TimeOfDay.fromDateTime(DateTime.now().closest(
-                            TimeStep.quarterHour,
-                            round: Round.down,
-                          )),
+                          initialTime: TimeOfDay.fromDateTime(
+                            DateTime.now().closest(
+                              TimeStep.quarterHour,
+                              round: Round.down,
+                            ),
+                          ),
                           locale: Locale('it'),
                           format: DateFormat('HH:mm', 'it'),
                           // Stile

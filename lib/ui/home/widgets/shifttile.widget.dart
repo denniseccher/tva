@@ -14,13 +14,13 @@ Widget evShiftTile({required Shift shift, required BuildContext context}) {
     builder: (context, setState) {
       // builder: (context, setState) {
       return ListTile(
-        tileColor: ColorExtension.fromHex(shift.course?.colorHex ?? 'ffffff'),
+        tileColor: fromHex(shift.course?.colorHex ?? 'ffffff'),
         textColor:
-            ColorExtension.fromHex(
+            fromHex(
               shift.course?.colorHex ?? 'ffffff',
             ).highContrast,
         iconColor:
-            ColorExtension.fromHex(
+            fromHex(
               shift.course?.colorHex ?? 'ffffff',
             ).highContrast,
         onTap: () {
@@ -30,12 +30,12 @@ Widget evShiftTile({required Shift shift, required BuildContext context}) {
         },
         leading: Text(shift.dtStart.toLocaleDayShort(context)),
         title: Text(
-          shift.course?.name.toCapitalizeWord() ?? '',
+          shift.course?.name.toCapitalizeWord ?? '',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         subtitle: Row(
           children: [
-            Text(shift.course?.location.toString().toCapitalizeWord() ?? ''),
+            Text(shift.course?.location.toString().toCapitalizeWord ?? ''),
             Text(" • "),
             Text(
               recap

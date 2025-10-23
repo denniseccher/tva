@@ -110,7 +110,7 @@ Future<void> populateAndSaveReport({
     final monthName = monthFormatter.format(monthDate);
     sheetObject.updateCell(
       excel.CellIndex.indexByString('E4'),
-      excel.TextCellValue("${monthName.toSentenceCase()} $targetYear"),
+      excel.TextCellValue("${monthName.toSentenceCase} $targetYear"),
       cellStyle: headerStyle, // Prefissi qui
     );
 
@@ -182,7 +182,7 @@ Future<void> populateAndSaveReport({
       // Shift's name here
       sheetObject.updateCell(
         excel.CellIndex.indexByString('D$currentRowNumber'),
-        excel.TextCellValue(shift.course?.name.toSentenceCase() ?? ''),
+        excel.TextCellValue(shift.course?.name.toSmartSentenceCase ?? ''),
         cellStyle: baseStyle,
       );
       // Shift's location here
@@ -208,7 +208,7 @@ Future<void> populateAndSaveReport({
 
     final Uint8List bytesToSave = Uint8List.fromList(fileBytes);
     String fileName =
-        "${user.nome.toSentenceCase()}${user.cognome.toSentenceCase()}_${monthName.toSentenceCase()}_$targetYear.xlsx";
+        "${user.nome.toSmartSentenceCase}${user.cognome.toSmartSentenceCase}_${monthName.toSmartSentenceCase}_$targetYear.xlsx";
 
     switch (type) {
       case "email":

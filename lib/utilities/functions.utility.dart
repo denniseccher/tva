@@ -65,7 +65,7 @@ openSheet({ required BuildContext context, required ShiftBloc bloc, required Str
                         value: month,
                         alignment: Alignment.center,
                         child: Text(
-                          formatter.format(month).toSentenceCase()
+                          formatter.format(month).toSentenceCase
                         ),
                       )
                     ).toList()
