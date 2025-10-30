@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 import 'package:loomeive/loomeive.dart';
 import 'package:loomeive/widgets/menu.widget.dart';
 import 'package:miss_minutes/bloc/shifts/shifts.bloc.dart';
 import 'package:miss_minutes/ui/add_course/add_course.page.dart';
 import 'package:miss_minutes/ui/add_price/add_price.page.dart';
+import 'package:miss_minutes/ui/settings/settings.page.dart';
 import 'package:miss_minutes/ui/login/login.dart';
 import 'package:miss_minutes/ui/shared/root.page.dart';
 import 'package:miss_minutes/utilities/functions.utility.dart';
@@ -84,40 +84,78 @@ PreferredSizeWidget evAppBar({
       IconButton(
         onPressed: () {
           // TODO apri bottom sheet con menu
-          open(context: context);
+          showModalBottomSheet(
+            showDragHandle: true,
+            isScrollControlled: true,
+            context: context,
+            builder:
+                (context) => MenuWidget(
+                  menuSections: [
+                    MenuSection(
+                      items: [
+                        MenuItem(
+                          label: 'email',
+                          icon: Icon(LucideIcons.mail),
+                          onTap:
+                              () => openSheet(
+                                context: context,
+                                bloc: shiftBloc,
+                                type: "email",
+                              ),
+                        ),
+                        MenuItem(
+                          label: 'save',
+                          icon: Icon(LucideIcons.download),
+                          onTap:
+                              () => openSheet(
+                                context: context,
+                                bloc: shiftBloc,
+                                type: "save",
+                              ),
+                        ),
+                      ],
+                    ),
+                    MenuSection(
+                      items: [
+                        MenuItem(
+                          label: 'impostazioni',
+                          icon: Icon(LucideIcons.pencilRuler),
+                          onTap:
+                              () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SettingsPage(),
+                                ),
+                              ),
+                        ),
+                      ],
+                    ),
+                    MenuSection(
+                      items: [
+                        MenuItem(
+                          label: 'logout',
+                          icon: Icon(LucideIcons.logOut),
+                          onTap: () async {
+                            await FirebaseAuth.instance.signOut();
+                            AuthService().signOut();
+                            if (context.mounted) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => RootPage(),
+                                ),
+                              );
+                            }
+                          },
+                          type: Type.warning,
+                        ),
+                      ],
+                    ),
+                  ],
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                ),
+          );
         },
         icon: Icon(LucideIcons.menu),
       ),
-      // IconButton(
-      //   onPressed:
-      //       () => openSheet(context: context, bloc: shiftBloc, type: "email"),
-      //   icon: GradientIcon(
-      //     size: 24,
-      //     offset: Offset(0, 0),
-      //     icon: Icons.email_outlined,
-      //     gradient: LinearGradient(
-      //       stops: [0, 0.25],
-      //       begin: Alignment.topLeft,
-      //       end: Alignment.bottomRight,
-      //       colors: [Colors.red, Color(0xFFFF6600)],
-      //     ),
-      //   ),
-      // ),
-      // IconButton(
-      //   onPressed:
-      //       () => openSheet(context: context, bloc: shiftBloc, type: "save"),
-      //   icon: GradientIcon(
-      //     size: 24,
-      //     offset: Offset(0, 0),
-      //     icon: Icons.download_rounded,
-      //     gradient: LinearGradient(
-      //       stops: [0, 0.25],
-      //       begin: Alignment.topLeft,
-      //       end: Alignment.bottomRight,
-      //       colors: [Colors.red, Color(0xFFFF6600)],
-      //     ),
-      //   ),
-      // ),
     ],
     title: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -138,27 +176,5 @@ PreferredSizeWidget evAppBar({
         ),
       ],
     ),
-  );
-}
-
-open({required BuildContext context}) {
-  showModalBottomSheet(
-    backgroundColor: Color.fromRGBO(244, 244, 244, 1),
-    context: context,
-    builder:
-        (context) => MenuWidget(
-          menuItems: [
-            [
-              MenuItem(label: 'Config', onTap: () => print("Hello world")),
-              MenuItem(label: 'Config', onTap: () => print("Hello world")),
-              MenuItem(label: 'Config', onTap: () => print("Hello world")),
-            ],
-            [
-              MenuItem(label: 'Config', onTap: () => print("Hello world")),
-              MenuItem(label: 'Config', onTap: () => print("Hello world")),
-            ],
-          ],
-          padding: EdgeInsets.all(16),
-        ),
   );
 }

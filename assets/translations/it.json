@@ -1,0 +1,15 @@
+{
+    "settings": {
+        "title" : "impostazioni",
+        "preferences" : "preferenze",
+        "user_data": {
+            "title": "dati utente",
+            "name": "nome",
+            "surname": "cognome",
+            "iban": "IBAN"
+        },
+        "courses" : {
+            "title" : "corsi"
+        }
+    }
+}
